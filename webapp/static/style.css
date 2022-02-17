@@ -1,0 +1,23 @@
+body{
+	background-color: antiquewhite;
+}
+
+.container{
+	width: 700px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.main{
+	display: flex;
+}
+
+.main div{
+	flex:1;
+}
+
+.main div button{
+	width:150px;
+	height:80px;
+	border-radius: 10px;
+}
