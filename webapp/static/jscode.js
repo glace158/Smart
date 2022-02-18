@@ -27,18 +27,18 @@ function servo_key_setting(arr, dic){
 	return dic;
 }
 
-function moter_key_setting(arr, dic, maxvalue){
-	for(var keys of arr){
-		for(var key of keys){
-			let partition = parseInt(maxvalue / keys.lenght);
-			let value = keys.lenght == keys.indexOf(key) + 1 ? maxvalue : partition * (keys.indexOf(key) + 1);
-			dic[key.toUpperCase()] = 'm' + arr.indexOf(keys) + " " + value;
-			dic[key.toLowerCase()] = 'm' + arr.indexOf(keys) + " " + -value;
-		}
-		dic[arr.indexOf(keys)] = 'm' + arr.indexOf(keys) + " " + "0";
+function moter_key_setting(arr, dic, maxvalue){  
+	for (var keys of arr){
+	  for(var key of keys){
+		let partition = parseInt(maxvalue / keys.length);
+		let value = keys.length == keys.indexOf(key) + 1 ? maxvalue : partition * (keys.indexOf(key) + 1);
+		dic[key.toUpperCase()] = 'm' + arr.indexOf(keys) + " " + value;
+		dic[key.toLowerCase()] = 'm' + arr.indexOf(keys) + " " + -value;
+	  }
+	  dic[arr.indexOf(keys)] = 'm' + arr.indexOf(keys) + " " + '0';
 	}
 	return dic;
-}
+  }
 
 function set_key(key){
 	if(key in key_dic){
