@@ -2,19 +2,14 @@ window.addEventListener("keydown", checkKeydown, false);
 window.addEventListener("keyup", checkKeyup, false);
 
 var degree_arr = [0,0,0,0,0,0];
+var moter_keys = [['q', 'a', 'z'], ['w', 's', 'x']];
+var servo_keys = ['p','o', 'i', 'u', 'y', 't'];
+var key_dic = {};
 
-var key_dic = 
-{'P': "s0 true", 'p': "s0 false", 
-'O': "s1 true", 'o': "s1 false", 
-'I': "s2 true", 'i': "s2 false",
-'U': "s3 true", 'u': "s3 false",
-'Y': "s4 true", 'y': "s4 false",
-'Q': "m0 100", 'A': "m0 66", 'Z': "m0 33", '1': "m0 0",
-'q': "m0 -100", 'a': "m0 -66", 'z': "m0 -33",
-'W': "m1 100", 'S': "m1 66", 'X': "m1 33", '2': "m1 0",
-'w': "m1 -100", 's': "m1 -66", 'x': "m1 -33",
-'D': "s5 true", 'd': "s5 false"
-};
+key_dic = servo_key_setting(servo_keys, key_dic);
+key_dic = moter_key_setting(moter_keys, key_dic, 100);
+console.log(key_dic);
+
 
 function checkKeydown(e){
 	set_key(e.key)
@@ -22,6 +17,27 @@ function checkKeydown(e){
 
 function checkKeyup(e){
 
+}
+
+function servo_key_setting(arr, dic){
+	for(var key of arr){
+		dic[key.toUpperCase()] = 's' + arr.indexOf(key) + " " + "true";
+		dic[key.toLowerCase()] = 's' + arr.indexOf(key) + " " + "false";
+	}
+	return dic;
+}
+
+function moter_key_setting(arr, dic, maxvalue){
+	for(var keys of arr){
+		for(var key of keys){
+			let partition = parseInt(maxvalue / keys.lenght);
+			let value = keys.lenght == keys.indexOf(key) + 1 ? maxvalue : partition * (keys.indexOf(key) + 1);
+			dic[key.toUpperCase()] = 'm' + arr.indexOf(keys) + " " + value;
+			dic[key.toLowerCase()] = 'm' + arr.indexOf(keys) + " " + -value;
+		}
+		dic[arr.indexOf(keys)] = 'm' + arr.indexOf(keys) + " " + "0";
+	}
+	return dic;
 }
 
 function set_key(key){
