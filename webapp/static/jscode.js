@@ -1,28 +1,31 @@
 window.addEventListener("keydown", checkKeydown, false);
 window.addEventListener("keyup", checkKeyup, false);
 
-var degree_arr = [0,0,0,0,0,0];
+
 var moter_keys = [['q', 'a', 'z'], ['w', 's', 'x']];
 var servo_keys = ['p','o', 'i', 'u', 'y', 't'];
+var degree_arr = [];
 var key_dic = {};
 
-key_dic = servo_key_setting(servo_keys, key_dic);
+key_dic = servo_key_setting(servo_keys, key_dic, degree_arr);
 key_dic = moter_key_setting(moter_keys, key_dic, 100);
 console.log(key_dic);
-
+console.log(degree_arr);
 
 function checkKeydown(e){
 	set_key(e.key)
+	console.log(e.key);
 }
 
 function checkKeyup(e){
 
 }
 
-function servo_key_setting(arr, dic){
-	for(var key of arr){
-		dic[key.toUpperCase()] = 's' + arr.indexOf(key) + " " + "true";
-		dic[key.toLowerCase()] = 's' + arr.indexOf(key) + " " + "false";
+function servo_key_setting(keyarr, dic , degarr){
+	for(var key of keyarr){
+		dic[key.toUpperCase()] = 's' + keyarr.indexOf(key) + " " + "true";
+		dic[key.toLowerCase()] = 's' + keyarr.indexOf(key) + " " + "false";
+		degarr.push(0);
 	}
 	return dic;
 }
