@@ -5,7 +5,7 @@
 
 const char l_speed_value[] = {'q', 'a', 'z', '1', 'Z', 'A', 'Q'};//moter0
 const char r_speed_value[] = {'w', 's', 'x', '2', 'X', 'S', 'W'};//motor1
-const char wrist_value[] = {'d', ' ', 'D'};// moter3
+const char wrist_value[] = {'t', ' ', 'T'};// moter3
 char key_check[] = {' ', ' ', ' ', ' ', ' '};
 
 void setup() {
