@@ -14,15 +14,15 @@ def set_motor(EN, INA, INB):
     return pwm
 
 def set_motor_contorl(pwm, INA, INB, speed):
-    pwm.ChangeDutyCycle(speed)  
+    pwm.ChangeDutyCycle(abs(speed))  
     
     if speed == 0:
         GPIO.output(INA, LOW)
         GPIO.output(INB, LOW)
-    elif speed <= 0:
+    elif speed < 0:
         GPIO.output(INA, LOW)
         GPIO.output(INB, HIGH)
-    elif speed >= 0:
+    elif speed > 0:
         GPIO.output(INA, HIGH)
         GPIO.output(INB, LOW)
   

@@ -1,8 +1,13 @@
 window.addEventListener("keydown", checkKeydown, false);
 window.addEventListener("keyup", checkKeyup, false);
 
+<<<<<<< HEAD
 
 var moter_keys = [['q', 'a', 'z'], ['w', 's', 'x']];
+=======
+var degree_arr = [0,0,0,0,0,0];
+var moter_keys = [['z', 'a', 'q'], ['x', 's', 'w']];
+>>>>>>> J_branch
 var servo_keys = ['p','o', 'i', 'u', 'y', 't'];
 var degree_arr = [];
 var key_dic = {};
@@ -30,18 +35,18 @@ function servo_key_setting(keyarr, dic , degarr){
 	return dic;
 }
 
-function moter_key_setting(arr, dic, maxvalue){
-	for(var keys of arr){
-		for(var key of keys){
-			let partition = parseInt(maxvalue / keys.lenght);
-			let value = keys.lenght == keys.indexOf(key) + 1 ? maxvalue : partition * (keys.indexOf(key) + 1);
-			dic[key.toUpperCase()] = 'm' + arr.indexOf(keys) + " " + value;
-			dic[key.toLowerCase()] = 'm' + arr.indexOf(keys) + " " + -value;
-		}
-		dic[arr.indexOf(keys)] = 'm' + arr.indexOf(keys) + " " + "0";
+function moter_key_setting(arr, dic, maxvalue){  
+	for (var keys of arr){
+	  for(var key of keys){
+		let partition = parseInt(maxvalue / keys.length);
+		let value = keys.length == keys.indexOf(key) + 1 ? maxvalue : partition * (keys.indexOf(key) + 1);
+		dic[key.toUpperCase()] = 'm' + arr.indexOf(keys) + " " + (value).toString();
+		dic[key.toLowerCase()] = 'm' + arr.indexOf(keys) + " " + (-value).toString();
+	  }
+	  dic[arr.indexOf(keys)] = 'm' + arr.indexOf(keys) + " " + '0';
 	}
 	return dic;
-}
+  }
 
 function set_key(key){
 	if(key in key_dic){
