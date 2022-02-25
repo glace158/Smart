@@ -1,13 +1,8 @@
 window.addEventListener("keydown", checkKeydown, false);
 window.addEventListener("keyup", checkKeyup, false);
 
-<<<<<<< HEAD
-
-var moter_keys = [['q', 'a', 'z'], ['w', 's', 'x']];
-=======
 var degree_arr = [0,0,0,0,0,0];
 var moter_keys = [['z', 'a', 'q'], ['x', 's', 'w']];
->>>>>>> J_branch
 var servo_keys = ['p','o', 'i', 'u', 'y', 't'];
 var degree_arr = [];
 var key_dic = {};
