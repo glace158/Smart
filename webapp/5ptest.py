@@ -1,14 +1,14 @@
-from flask import Flask, render_template, session, request
-from flask_socketio import SocketIO, send, emit
+from flask import Flask, request, render_template
+from flask_socketio import SocketIO, emit
 import motor
 import servo2
 import RPi.GPIO as GPIO
-
 app = Flask(__name__)
-app.secret_key = "pswd"
 socketio = SocketIO(app)
 
 GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 #motor pin
 en = [2, 17, 10, 0]
@@ -50,16 +50,31 @@ def myservo(num, degree):
     except:
         return "fail"
 
-@socketio.on('testSocket',namespace='/test')
-def testEvent(data):
+#socket
+@socketio.on('g', namespace='/socket')
+def rgb(data):
     print(data)
-    num = data['num']
-    num = addnum(num)
-    emit('test', {"num": num},callback=session.get('test'))
+    if GPIO.input(18) == 1:
+        data = 255
+    else:
+        data = 0
+        
+    emit("g", {"g": data}, broadcast=True)
 
-def addnum(num1):
-    return num1 + 1
 
-if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8080, debug=True)
-    GPIO.cleanup()
+@socketio.on('connect', namespace='/socket')
+def connect():
+    print("connected...")
+
+@socketio.on('disconnect', namespace='/socket')
+def connect():
+    print("Disconnected")
+
+
+if __name__== '__main__':
+    try:
+        #app.run(host='0.0.0.0', port='8080')
+        socketio.run(app, host='0.0.0.0', port='8080')
+        GPIO.cleanup()
+    except KeyboardInerrupt:
+        GPIO.cleanup()
