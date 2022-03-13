@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+   <!--Required meta tags--
+   
+   <!--Bootstrap CSS-->
+   <link rel="stylesheet" href = './static/style.css?aa'><title>Live Streaming Demonstration</title>
+</head>
+<body>
+<div calss="container"> 
+   <div calss="col-lg-8 offset-lg-2">
+      <h3 calss="mt-5">Live Streaming</h3>
+      <!--<img src="{{ url_for('video_feed')}}"width="100%">-->
+     </div>
+   </div>
+</div>
+</body>
+</html>
+
+
+<div class="inner-div" style="width:300px; height:200px; border: 5px solid black; margin:20px; display:inline-block;"> 
+   <img src="{{ url_for('video_feed')}}"width="300"height="200"> 
+</div>
+    
+<div class="inner-div" style="width:300px; height:200px; border: 5px solid black; margin:30px; display:inline-block;background:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqKWBIdlcwxZgND5HUn42v40qzLgAx8xsIRA&usqp=CAU"> 
+    <img src="{{ url_for('video_feed2')}}"width="500"height="200">
+</div>
+    
+    
+<div class="inner-div" style="width:322px; height:200px; border: 5px solid black; margin:25px; vertical-align: bottom; display:inline-block;background:url(https://www.microstrain.com/sites/default/files/software/rviz_point_cloud_-_750x350.png"> 
+
+</div>
+
+<hr>    
+<div class="inner-div"style="width:280px; height:180px; border: 5px solid black; margin:20px; vertical-align: bottom; float:left;> 
+
+<table style="white-space: nomal; border-collapse: collapse; width: 60%; margin: 20px; height: 112px;" border="1" data-ke-style="style12">
+<tbody>
+<tr>
+<td style="width: 100%;"><br />outside temperature : 100c <br /> inside temperature : 30c <br />air quality : 50ppm defog mode : off <br />mic : on <br />sound mute : 0ff </td>
+</tr>
+</tbody>
+</table>
+
+
+
+<span class="name-span"></span><br></div>
+    
+    
+</div>
+<div class="inner-div" style="border: 5px solid black; margin:15px; float:left; font-size: 11pt; vertical-align: bottom; width:180px;height="180">  L Speed:-100 R Speed:100
+<div class="inner-div" style="width:180px; height:180px; display:inline-block; background:url(http://www.sciweavers.org/download/666555_kakaotalk_20220228_144825013_phpZqWuM4.png">
+
+<span class="name-span"></span><br></div>
+<span class="inner-span"></span><br></div>
+    
+</div>
+<div class="inner-div" style="border: 5px solid black; margin:15px; float:left; vertical-align: top; width:280px; height:180">
+<div class="inner-div" style="width:280px; height:180px; display:inline-block;background:url(https://static.educalingo.com/img/en/800/fire.jpg">
+    <span class="name-span"></span><br></div>
+    <span class="inner-span"></span><br></div>
+    
+ 
+    
+</div>
+    
+<div class="inner-div" style="border: 5px solid black; margin:15px; float:left; vertical-align: top; width:190px; height:"180">
+<div class="inner-div" style="width:190px; height:180px; display:inline-block;background:url(http://www.sciweavers.org/download/2_image1_php52MWKp.jpg">
+    <table style="white-space: nomal; float:right; border-collapse: collapse; width: 60%; height: 100px;" border="1" data-ke-style="style12">
+<tbody>
+<tr>
+<td style="width: 100%;"><br />Grip:20 <br /> Wrist:50 <br />Wrist Roll:120 Elbow:100<br />Shoulder: 55<br />Waist:0 </td>
+</tr>
+</tbody>
+</table>
+    
+    <span class="name-span"></span><br></div>
+    <span class="inner-span"></span><br></div>
+ 
+</div>
+    
+</div>
