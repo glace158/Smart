@@ -23,11 +23,11 @@ for i in range(4):
 #servo pin
 servos = []
 
-servos.append(14)
+servos.append(14) 
 servos.append(15)
 servos.append(18)
 servos.append(23)
-servos.append(24)
+servos.append((24,8))
 servos.append(25)
 
 @app.route('/')
@@ -45,6 +45,11 @@ def mymoter(num, speed):
 @app.route('/servo/<num>/<degree>')
 def myservo(num, degree):
     try:
+        if(type(servos[int(num)]) == type(())):
+            servo2.servo_pos(servos[int(num)][0], int(degree))
+            servo2.servo_pos(servos[int(num)][1], 180 - int(degree))
+            return "ok"
+        
         servo2.servo_pos(servos[int(num)], int(degree))
         return "ok"
     except:
