@@ -3,19 +3,20 @@
 	<head>
 		<meta charset = "UTF-8">
 		<title>Home</title>
-		<script type="text/javascript" src="./static/jscode.js?ver=3"></script>
+		<script type="text/javascript" src="./static/jscode.js?ver=5"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
+		<script language="javascript" type="text/javascript" src="./static/p5.min.js"></script>
+		<script language="javascript" type="text/javascript" src="./static/p5test.js"></script>
+
 		<link rel="stylesheet" href = "{{ url_for('static', filename='style.css')}}">
 	</head>
 	<body>
 		<dir class = "container">
 			<dir class = "header">
 				<h2>Home Iot</h2>
+				<input type="submit" id="socketTest"></input>
 			</dir>
-			<div class = "main">
-			</div>
-			<div id = "result">
-			
-			</div>
 		</dir>
 	</body>
 </html>

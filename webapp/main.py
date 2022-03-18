@@ -1,9 +1,13 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template, session, request
+from flask_socketio import SocketIO, send, emit
 import motor
 import servo2
 import cv2
 import RPi.GPIO as GPIO
+
 app = Flask(__name__)
+app.secret_key = "pswd"
+socketio = SocketIO(app)
 
 GPIO.setmode(GPIO.BCM)
 
@@ -20,11 +24,11 @@ for i in range(4):
 #servo pin
 servos = []
 
-servos.append(14)
+servos.append(14) 
 servos.append(15)
 servos.append(18)
 servos.append(23)
-servos.append(24)
+servos.append((24,8))
 servos.append(25)
 
 @app.route('/')
@@ -39,19 +43,29 @@ def mymoter(num, speed):
     except:
         return "fail"  
 
-
-
 @app.route('/servo/<num>/<degree>')
 def myservo(num, degree):
     try:
+        if(type(servos[int(num)]) == type(())):
+            servo2.servo_pos(servos[int(num)][0], int(degree))
+            servo2.servo_pos(servos[int(num)][1], 180 - int(degree))
+            return "ok"
+        
         servo2.servo_pos(servos[int(num)], int(degree))
         return "ok"
     except:
         return "fail"
 
-if __name__== '__main__':
-    try:
-        app.run(host='0.0.0.0', port='8080')
-        GPIO.cleanup()
-    except KeyboardInerrupt:
-        GPIO.cleanup()
+@socketio.on('testSocket',namespace='/test')
+def testEvent(data):
+    print(data)
+    num = data['num']
+    num = addnum(num)
+    emit('test', {"num": num},callback=session.get('test'))
+
+def addnum(num1):
+    return num1 + 1
+
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=8080, debug=True)
+    GPIO.cleanup()
