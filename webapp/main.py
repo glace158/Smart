@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 import motor
 import servo2
+import cv2
 import RPi.GPIO as GPIO
 app = Flask(__name__)
 
