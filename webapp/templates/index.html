@@ -4,17 +4,85 @@
 		<meta charset = "UTF-8">
 		<title>Home</title>
 		<script type="text/javascript" src="./static/jscode.js?ver=5"></script>
+		<script type="text/javascript" src="./static/uicontroll.js?ver=5"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
 		<script language="javascript" type="text/javascript" src="./static/p5.min.js"></script>
-		<script language="javascript" type="text/javascript" src="./static/p5test.js"></script>
+		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=5"></script>
 
 		<link rel="stylesheet" href = "{{ url_for('static', filename='style.css')}}">
 	</head>
 	<body>
-		<dir class = "container">
-			<dir class = "header">
-				<h2>Home Iot</h2>
+		<dir class = "container">    
+			<div class="list-wrap">
+        <ul>
+            <li>
+                <p class="tit">RGB Camera</p>
+                <div class="cont">
+                    <img src="{{ url_for('video_feed')}}"width="300"height="200">
+                </div>
+            </li>
+            <li>
+                <p class="tit">Themal Camera</p>
+                <div class="cont">
+                    <img src="temp_02.jpg"/>
+                </div>
+            </li>
+            <li>
+                <p class="tit">Radar</p>
+                <div class="cont">
+                    <img src="temp_03.jpg"/>
+                </div>
+            </li>
+        </ul>
+        <ul class="bot">
+            <li class="border info">
+                <p class="tit">Info</p>
+                <div class="cont">
+                    <dl>
+                        <dt>outside temperature</dt>
+                        <dd>N/A</dd>
+                        <dt>inside temperature</dt>
+                        <dd>N/A</dd>
+                        <dt>air quiality</dt>
+                        <dd>N/A</dd>
+                        <dt>defog mode</dt>
+                        <dd>off</dd>
+                        <dt>mic</dt>
+                        <dd>off</dd>
+                        <dt>sound mute</dt>
+                        <dd>off</dd>
+                    </dl>
+                </div>
+            </li>
+            <li class="border drive">
+                <p class="tit">Drive Control</p>
+                <div class="cont">
+                    <span>L Speed: <em>0</em></span>
+                    <span>R Speed: <em>0</em></span>
+                </div>
+            </li>
+            <li class="border arm">
+                <p class="tit">Arm Control</p>
+                <div class="cont">
+                    <div class="txt-group">
+                        <span>Grip: 0</span>
+                        <span>Wrist: 0</span>
+                        <span>Wrist Roll: 0</span>
+                        <span>Elbow: 0</span>
+                        <span>Shoulder: 0</span>
+                        <span>Waist: 0</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <p class="tit">Arm Camera</p>
+                <div class="cont">
+                    <img src="{{ url_for('video_feed1')}}"width="300"height="200">
+                </div>
+            </li>
+        </ul>
+    </div>
 				<input type="submit" id="socketTest"></input>
 			</dir>
 		</dir>

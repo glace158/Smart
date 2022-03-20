@@ -19,7 +19,7 @@ $(document).on('click','#socketTest',function(){
 });
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(100, 100);
 }
 
 function draw() {

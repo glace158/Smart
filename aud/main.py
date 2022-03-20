@@ -8,8 +8,8 @@ app = Flask(__name__)
 
  
 
-camera1 = cv2.VideoCapture(0)  # use 0 for web camera
-camera2 = cv2.VideoCapture(2)
+camera1 = cv2.VideoCapture(1)  # use 0 for web camera
+camera2 = cv2.VideoCapture(3)
  
 
 def gen_frames(camera):  # generate frame by frame from camera
@@ -29,7 +29,6 @@ def gen_frames(camera):  # generate frame by frame from camera
 
  
 @app.route('/video_feed')
-
 def video_feed():
 
     """Video streaming route. Put this in the src attribute of an img tag."""
@@ -48,17 +47,9 @@ def video_feed1():
 @app.route('/')
 
 def index():
-
-    """Video streaming home page."""
-
     return render_template('index.html')
 
  
 
- 
-
 if (__name__ == '__main__'):
-
- 
-
     app.run(host='0.0.0.0', port=8080)

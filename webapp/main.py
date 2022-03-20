@@ -1,4 +1,5 @@
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, Response
+
 from flask_socketio import SocketIO, send, emit
 import motor
 import servo2
@@ -8,6 +9,9 @@ import RPi.GPIO as GPIO
 app = Flask(__name__)
 app.secret_key = "pswd"
 socketio = SocketIO(app)
+
+camera1 = cv2.VideoCapture(0)  
+camera2 = cv2.VideoCapture(1)
 
 GPIO.setmode(GPIO.BCM)
 
@@ -30,6 +34,32 @@ servos.append(18)
 servos.append(23)
 servos.append((24,8))
 servos.append(25)
+
+
+##########
+def gen_frames(camera):  # generate frame by frame from camera
+
+    while True:
+        # Capture frame-by-frame
+        success, frame = camera.read()  # read the camera frame
+        if (not success):
+
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen_frames(camera1), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_feed1')
+def video_feed1():
+    return Response(gen_frames(camera2), mimetype='multipart/x-mixed-replace; boundary=frame') 
+#####
+
 
 @app.route('/')
 def hello():
@@ -67,5 +97,5 @@ def addnum(num1):
     return num1 + 1
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8080, debug=True)
+    socketio.run(app, host='0.0.0.0', port=8080)#, debug=True)
     GPIO.cleanup()

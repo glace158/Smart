@@ -1,12 +1,12 @@
 import cv2
 
 
-cap1 = cv2.VideoCapture(2)
+cap1 = cv2.VideoCapture(0)
 cap1.set(3, 480)
 cap1.set(4, 320)
 
 
-cap2 = cv2.VideoCapture(0)
+cap2 = cv2.VideoCapture(2)
 cap2.set(3, 480)
 cap2.set(4, 320)
 
