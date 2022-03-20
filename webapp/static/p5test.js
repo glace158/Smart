@@ -18,13 +18,38 @@ $(document).on('click','#socketTest',function(){
 	});
 });
 
+var xframe = 200;
+var yframe = 100;
+
+var degree = 0;
+var distance = 0;
+
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(xframe, yframe);
+  
+  background(0);
+  noFill();
+  strokeWeight(2);
+  stroke(0, 255, 0, 80);
+  textSize(xframe / 60);
+  
+  let linenum = 5;
+  let maxdis = 15;
+  
+  for(let i = 94; i > linenum; i -= 94 / linenum){
+    arc(xframe / 2, yframe, xframe * (0.01 * i), yframe * 2 * (0.01 * i), PI, 0);
+  }
+  
+  for(let i = 1; i <= linenum; i++){
+    let dtext = maxdis / linenum * i;
+    text(dtext + 'm', xframe/2, yframe - ((yframe/linenum) * i * 0.96));
+  }
 }
 
 function draw() {
-  background(0);
-  strokeWeight(100);
-  stroke(r,g,b);
-  point(400,300);
+  textSize(xframe / 40);
+  text("Distance: ", xframe / 100, yframe/ 15);
+  text("Degree: ", xframe / 100, yframe/ 8);
+  fill(255);
+  noStroke();
 }
