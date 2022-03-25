@@ -4,10 +4,12 @@ window.addEventListener("keyup", checkKeyup, false);
 var degree_arr = [0,0,0,0,0,0];
 var moter_keys = [['z', 'a', 'q'], ['x', 's', 'w']];
 var servo_keys = ['p','o', 'i', 'u', 'y', 't'];
+var armid = ["#Grip", "#Wrist", "#Wrist_Roll", "#Elbow", "#Shoulder", "#Waist"]
+var driveid = ["#L_Speed", "#R_Speed"]
 var key_dic = {};
 
 key_dic = servo_key_setting(servo_keys, key_dic);
-key_dic = moter_key_setting(moter_keys, key_dic, 100);
+key_dic = moter_key_setting(moter_keys, key_dic, 100 );
 console.log(key_dic);
 console.log(degree_arr);
 
@@ -58,6 +60,9 @@ function set_key(key){
 
 function set_speed(motor_num, speed){
 	set_control("motor", motor_num, speed);
+		let result = document.querySelector(driveid[motor_num]);
+		val = String(speed);
+	result.innerHTML = val;
 }
 
 function set_degree(servo_num, state){
@@ -66,10 +71,16 @@ function set_degree(servo_num, state){
 	degree_arr[servo_num] = state == "true" ? 
 	(degree_arr[servo_num] >= 180 ? 180 : degree_arr[servo_num] + value ):
 	(degree_arr[servo_num] <= 0 ? 0 : degree_arr[servo_num] - value);
-	
+	let result = document.querySelector(armid[servo_num]);
+	    key = armid[servo_num].replace("#", ""),
+		val = String(degree_arr[servo_num]);
+		
+	result.innerHTML = key+":"+val;
 	set_control("servo", servo_num, degree_arr[servo_num]);
+	  
 }
 
 function set_control(type, pwm, speed){
 	fetch("/" + type + "/" + pwm + "/" + speed);
 }
+
