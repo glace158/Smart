@@ -19,13 +19,13 @@
             <li>
                 <p class="tit">RGB Camera</p>
                 <div class="cont">
-                    <img src="{{ url_for('video_feed')}}"width="300"height="200">
+		     <img src="{{ url_for('video_feed', num=0)}}"width="300"height="200">
                 </div>
             </li>
             <li>
                 <p class="tit">Themal Camera</p>
                 <div class="cont">
-                    <img src="temp_02.jpg"/>
+                    <img src="{{ url_for('video_feed', num=1)}}"width="300"height="200">
                 </div>
             </li>
             <li>
@@ -78,7 +78,6 @@
             <li>
                 <p class="tit">Arm Camera</p>
                 <div class="cont">
-                    <img src="{{ url_for('video_feed1')}}"width="300"height="200">
                 </div>
             </li>
         </ul>

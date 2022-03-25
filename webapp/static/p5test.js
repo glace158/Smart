@@ -18,8 +18,8 @@ $(document).on('click','#socketTest',function(){
 	});
 });
 
-var xframe = 200;
-var yframe = 100;
+var xframe = 800;
+var yframe = 400;
 
 var degree = 0;
 var distance = 0;

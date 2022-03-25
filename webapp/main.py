@@ -4,14 +4,12 @@ from flask_socketio import SocketIO, send, emit
 import motor
 import servo2
 import cv2
+import asyncio
 import RPi.GPIO as GPIO
 
 app = Flask(__name__)
 app.secret_key = "pswd"
 socketio = SocketIO(app)
-
-camera1 = cv2.VideoCapture(0)  
-camera2 = cv2.VideoCapture(1)
 
 GPIO.setmode(GPIO.BCM)
 
@@ -35,15 +33,24 @@ servos.append(23)
 servos.append((24,8))
 servos.append(25)
 
-
 ##########
+try:
+    cameras = []
+    cameras.append(cv2.VideoCapture(0))
+    cameras.append(cv2.VideoCapture(2))
+    for i in range(len(cameras)):
+        cameras[i].set(3, 80)
+        cameras[i].set(4, 40)
+except:
+    print("camera fail")
+    
 def gen_frames(camera):  # generate frame by frame from camera
 
     while True:
         # Capture frame-by-frame
         success, frame = camera.read()  # read the camera frame
+        
         if (not success):
-
             break
         else:
             ret, buffer = cv2.imencode('.jpg', frame)
@@ -51,13 +58,17 @@ def gen_frames(camera):  # generate frame by frame from camera
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen_frames(camera1), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/video_feed/<int:num>')
+def video_feed(num):
+    return Response(gen_frames(cameras[num]), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_feed1')
 def video_feed1():
-    return Response(gen_frames(camera2), mimetype='multipart/x-mixed-replace; boundary=frame') 
+    return Response(gen_frames(cameras[0]), mimetype='multipart/x-mixed-replace; boundary=frame') 
+
+@app.route('/video_feed2')
+def video_feed2():
+    return Response(gen_frames(cameras[1]), mimetype='multipart/x-mixed-replace; boundary=frame') 
 #####
 
 
