@@ -9,15 +9,38 @@ socket.on('connect',function(ret){
 		console.log("connected");
 	});
 
+
 $(document).on('click','#socketTest',function(){
     socket.emit('testSocket',{num});
   
-    socket.on('test',function(data){
+    socket.on('test1',function(data){
     num = data.num;
     console.log("server told : "+ data.num);
 	});
 });
 
+function onloadcam1(){
+    var time = new Date().getTime();
+    console.log("frame");
+    document.getElementById("cam1").src="/video_feed1?time" + time;
+  }
+
+function onloadcam2(){
+    var time = new Date().getTime();
+    document.getElementById("cam2").src="/video_feed2?time" + time;
+  }
+/*
+var camnum = 1;
+function startAlert() {
+  playAlert = setInterval(function() {
+    var time = new Date().getTime();
+    document.getElementById("cam1").src="/video_feed1?time" + time;
+    //document.getElementById("cam2").src="/video_feed2?time" + time;
+  }, 50);
+}
+
+startAlert();
+*/
 var xframe = 800;
 var yframe = 400;
 

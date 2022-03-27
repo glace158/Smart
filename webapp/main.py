@@ -1,14 +1,16 @@
 from flask import Flask, render_template, session, request, Response
-
 from flask_socketio import SocketIO, send, emit
 import motor
 import servo2
 import cv2
-import asyncio
+from queue import Queue
 import RPi.GPIO as GPIO
+from threading import Thread
+import asyncio
+import time
+
 
 app = Flask(__name__)
-app.secret_key = "pswd"
 socketio = SocketIO(app)
 
 GPIO.setmode(GPIO.BCM)
@@ -26,54 +28,66 @@ for i in range(4):
 #servo pin
 servos = []
 
-servos.append(14) 
-servos.append(15)
-servos.append(18)
-servos.append(23)
-servos.append((24,8))
-servos.append(25)
-
+servos.append((14, 15)) 
+servos.append((18, 23))
 ##########
 try:
+
     cameras = []
     cameras.append(cv2.VideoCapture(0))
     cameras.append(cv2.VideoCapture(2))
-    for i in range(len(cameras)):
-        cameras[i].set(3, 80)
-        cameras[i].set(4, 40)
+    
+    cameras[0].set(3, 80)
+    cameras[0].set(4, 40)
+    print(cameras[0].get(3))
+    print(cameras[0].get(4))
+    
 except:
     print("camera fail")
-    
-def gen_frames(camera):  # generate frame by frame from camera
 
+q1 = Queue()
+q2 = Queue()
+prev_time1 = 0
+prev_time2 = 0
+fps = 12
+def gen_frames(camera, queue, prev_time):  
+    
     while True:
-        # Capture frame-by-frame
-        success, frame = camera.read()  # read the camera frame
-        
+        success, frame = camera.read()
+            
+        current_time = time.time() - prev_time
         if (not success):
             break
-        else:
-            ret, buffer = cv2.imencode('.jpg', frame)
+        elif(success is True) and (current_time > 1./ fps):
+            prev_time = time.time()
+            ret, buffer = cv2.imencode('.png', frame)
             frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+#             print("frame")
+            queue.put(b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
+            #yield (b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/video_feed/<int:num>')
 def video_feed(num):
-    return Response(gen_frames(cameras[num]), mimetype='multipart/x-mixed-replace; boundary=frame')
+    print("cam",num)
+    return Response( q1.get() , mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_feed1')
 def video_feed1():
-    return Response(gen_frames(cameras[0]), mimetype='multipart/x-mixed-replace; boundary=frame') 
+    return Response( q1.get() , mimetype='multipart/x-mixed-replace; boundary=frame') 
 
 @app.route('/video_feed2')
 def video_feed2():
-    return Response(gen_frames(cameras[1]), mimetype='multipart/x-mixed-replace; boundary=frame') 
+    return Response( q2.get(), mimetype='multipart/x-mixed-replace; boundary=frame') 
 #####
 
-
 @app.route('/')
-def hello():
+def main():
+    thread1 = Thread(target=gen_frames, args=(cameras[0], q1,prev_time1,))
+    thread2 = Thread(target=gen_frames, args=(cameras[1], q2,prev_time2,))
+    thread1.daemon = True
+    thread2.daemon = True
+    thread1.start()
+    thread2.start()
     return render_template('index.html')
 
 @app.route('/motor/<num>/<speed>')
@@ -87,6 +101,7 @@ def mymoter(num, speed):
 @app.route('/servo/<num>/<degree>')
 def myservo(num, degree):
     try:
+        print("servo", num, ": ",degree)
         if(type(servos[int(num)]) == type(())):
             servo2.servo_pos(servos[int(num)][0], int(degree))
             servo2.servo_pos(servos[int(num)][1], 180 - int(degree))
@@ -102,11 +117,16 @@ def testEvent(data):
     print(data)
     num = data['num']
     num = addnum(num)
-    emit('test', {"num": num},callback=session.get('test'))
+    emit('test1', {"num": num},callback=session.get('test'))
+    
+#@socketio.on('testvideo',namespace='/test')
+#def video(data):
+#    emit('testframe', {"frame": q.get()},callback=session.get('test'))
 
 def addnum(num1):
     return num1 + 1
 
 if __name__ == '__main__':
+
     socketio.run(app, host='0.0.0.0', port=8080)#, debug=True)
     GPIO.cleanup()
