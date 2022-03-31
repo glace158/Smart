@@ -4,6 +4,7 @@
 		<meta charset = "UTF-8">
 		<title>Home</title>
 		
+<<<<<<< HEAD
 		<script type="text/javascript" src="./static/uicontroll.js?ver=5"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
@@ -15,27 +16,55 @@
 	<body>
 		<dir class = "container">    
 			<div class="list-wrap">
+=======
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
+		<script language="javascript" type="text/javascript" src="./static/p5.min.js"></script>
+		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=2"></script>
+		<script type="text/javascript" src="./static/jscode.js?ver=4"></script>
+		<script type="text/javascript" src="./static/uicontroll.js?ver=1"></script>
+		<link rel="stylesheet" href = "{{ url_for('static', filename='style.css')}}">
+	</head>
+	<body>
+		<div class = "container">
+			<div class = "header">
+				<div class="list-wrap">
+>>>>>>> css2
         <ul>
             <li>
                 <p class="tit">RGB Camera</p>
                 <div class="cont">
+<<<<<<< HEAD
 		     <!-img src="{{ url_for('video_feed', num=0)}}"width="300"height="200">
 		     <img id="cam1" onload="onloadcam1();" src="{{url_for('video_feed1')}}"width="300"height="200">
+=======
+                    <img src="temp_03.jpg"/>
+>>>>>>> css2
                 </div>
             </li>
             <li>
                 <p class="tit">Themal Camera</p>
                 <div class="cont">
+<<<<<<< HEAD
                     <!-img src="{{ url_for('video_feed', num=1)}}"width="300"height="200">
 		    <img id="cam2" onload="onloadcam2();" src="{{ url_for('video_feed2')}}"width="300"height="200">
+=======
+                    <img src="temp_02.jpg"/>
+>>>>>>> css2
                 </div>
             </li>
             <li>
                 <p class="tit">Radar</p>
+<<<<<<< HEAD
                 <div class="cont">
 			<main>
 			</main>
                 </div>
+=======
+		<main style="width: 300px; height: 300px;">
+		
+		</main> 
+>>>>>>> css2
             </li>
         </ul>
         <ul class="bot">
@@ -50,7 +79,11 @@
                         <dt>air quiality</dt>
                         <dd>N/A</dd>
                         <dt>defog mode</dt>
+<<<<<<< HEAD
                         <dd id="sa">off</dd>
+=======
+                        <dd>off</dd>
+>>>>>>> css2
                         <dt>mic</dt>
                         <dd>off</dd>
                         <dt>sound mute</dt>
@@ -61,32 +94,52 @@
             <li class="border drive">
                 <p class="tit">Drive Control</p>
                 <div class="cont">
+<<<<<<< HEAD
                     <span>L Speed: <em>0</em></span>
                     <span>R Speed: <em>0</em></span>
+=======
+                    <span>L Speed: <em id="L_Speed">0</em></span>
+                    <span>R Speed: <em id="R_Speed">0</em></span>
+>>>>>>> css2
                 </div>
             </li>
             <li class="border arm">
                 <p class="tit">Arm Control</p>
                 <div class="cont">
                     <div class="txt-group">
+<<<<<<< HEAD
                         <span>Grip: 0</span>
                         <span>Wrist: 0</span>
                         <span>Wrist Roll: 0</span>
                         <span>Elbow: 0</span>
                         <span>Shoulder: 0</span>
                         <span>Waist: 0</span>
+=======
+                        <span id="Grip">Grip: 0</span>
+                        <span id="Wrist">Wrist: 0</span>
+                        <span id="Wrist_Roll">Wrist_Roll: 0</span>
+                        <span id="Elbow">Elbow: 0</span>
+                        <span id="Shoulder">Shoulder: 0</span>
+                        <span id="Waist">Waist: 0</span>
+>>>>>>> css2
                     </div>
                 </div>
             </li>
             <li>
                 <p class="tit">Arm Camera</p>
                 <div class="cont">
+<<<<<<< HEAD
+=======
+                    <img src="temp_03.jpg"/>
+>>>>>>> css2
                 </div>
             </li>
         </ul>
     </div>
 				<input type="submit" id="socketTest"></input>
-			</dir>
-		</dir>
+</div>
+</div>
+
+
 	</body>
 </html>
