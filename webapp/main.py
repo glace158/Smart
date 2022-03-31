@@ -3,6 +3,7 @@ from flask import Flask, render_template, session, request, Response
 from flask_socketio import SocketIO, send, emit
 import motor
 import servo2
+import radar
 import cv2
 import asyncio
 import RPi.GPIO as GPIO
@@ -23,6 +24,10 @@ motors = []
 for i in range(4):
     motors.append( motor.set_motor(en[i], ina[i], inb[i]) )
 
+#radar servo
+radar_servo = 12
+radar_degree = 90
+tik = -1
 #servo pin
 servos = []
 
@@ -88,21 +93,28 @@ def mymoter(num, speed):
 def myservo(num, degree):
     try:
         if(type(servos[int(num)]) == type(())):
-            servo2.servo_pos(servos[int(num)][0], int(degree))
-            servo2.servo_pos(servos[int(num)][1], 180 - int(degree))
+            servo2.servo_pos(servos[int(num)][0], int(degree), 0, 180)
+            servo2.servo_pos(servos[int(num)][1], 180 - int(degree), 0,180)
             return "ok"
         
-        servo2.servo_pos(servos[int(num)], int(degree))
+        servo2.servo_pos(servos[int(num)], int(degree), 0, 180)
         return "ok"
     except:
         return "fail"
 
 @socketio.on('testSocket',namespace='/test')
 def testEvent(data):
-    print(data)
-    num = data['num']
-    num = addnum(num)
-    emit('test', {"num": num},callback=session.get('test'))
+    global radar_degree
+    global tik
+    if(radar_degree < 30 or radar_degree > 150):
+        tik *= -1
+    
+    radar_degree += tik
+    servo2.servo_pos(radar_servo, radar_degree, 30, 150)
+    distance = radar.get_distance()
+    emit('test', {"distance": distance, "angle": radar_degree},callback=session.get('test'))
+
+
 
 def addnum(num1):
     return num1 + 1
