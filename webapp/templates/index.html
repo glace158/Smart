@@ -3,13 +3,13 @@
 	<head>
 		<meta charset = "UTF-8">
 		<title>Home</title>
-		<script type="text/javascript" src="./static/jscode.js?ver=5"></script>
+		
 		<script type="text/javascript" src="./static/uicontroll.js?ver=5"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
 		<script language="javascript" type="text/javascript" src="./static/p5.min.js"></script>
-		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=2"></script>
-
+		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=6"></script>
+		<script type="text/javascript" src="./static/jscode.js?ver=5"></script>
 		<link rel="stylesheet" href = "{{ url_for('static', filename='style.css')}}">
 	</head>
 	<body>
@@ -19,13 +19,15 @@
             <li>
                 <p class="tit">RGB Camera</p>
                 <div class="cont">
-		     <img src="{{ url_for('video_feed', num=0)}}"width="300"height="200">
+		     <!-img src="{{ url_for('video_feed', num=0)}}"width="300"height="200">
+		     <img id="cam1" onload="onloadcam1();" src="{{url_for('video_feed1')}}"width="300"height="200">
                 </div>
             </li>
             <li>
                 <p class="tit">Themal Camera</p>
                 <div class="cont">
-                    <img src="{{ url_for('video_feed', num=1)}}"width="300"height="200">
+                    <!-img src="{{ url_for('video_feed', num=1)}}"width="300"height="200">
+		    <img id="cam2" onload="onloadcam2();" src="{{ url_for('video_feed2')}}"width="300"height="200">
                 </div>
             </li>
             <li>
@@ -48,7 +50,7 @@
                         <dt>air quiality</dt>
                         <dd>N/A</dd>
                         <dt>defog mode</dt>
-                        <dd>off</dd>
+                        <dd id="sa">off</dd>
                         <dt>mic</dt>
                         <dd>off</dd>
                         <dt>sound mute</dt>
