@@ -36,19 +36,16 @@ servos = []
 servos.append((14, 15)) 
 servos.append((18, 23))
 ##########
-try:
 
-    cameras = []
-    cameras.append(cv2.VideoCapture(0))
-    cameras.append(cv2.VideoCapture(2))
+#    cameras = []
+#    cameras.append(cv2.VideoCapture(0))
+#    cameras.append(cv2.VideoCapture(2))
     
-    cameras[0].set(3, 80)
-    cameras[0].set(4, 40)
-    print(cameras[0].get(3))
-    print(cameras[0].get(4))
-    
-except:
-    print("camera fail")
+#    cameras[0].set(3, 80)
+#    cameras[0].set(4, 40)
+#    print(cameras[0].get(3))
+#    print(cameras[0].get(4))
+
 
 q1 = Queue()
 q2 = Queue()
@@ -87,12 +84,14 @@ def video_feed2():
 
 @app.route('/')
 def main():
-    thread1 = Thread(target=gen_frames, args=(cameras[0], q1,prev_time1,))
-    thread2 = Thread(target=gen_frames, args=(cameras[1], q2,prev_time2,))
-    thread1.daemon = True
-    thread2.daemon = True
-    thread1.start()
-    thread2.start()
+    
+#    thread1 = Thread(target=gen_frames, args=(cameras[0], q1,prev_time1,))
+#    thread2 = Thread(target=gen_frames, args=(cameras[1], q2,prev_time2,))
+#    thread1.daemon = True
+#    thread2.daemon = True
+#    thread1.start()
+#    thread2.start()
+
     return render_template('index.html')
 
 @app.route('/motor/<num>/<speed>')

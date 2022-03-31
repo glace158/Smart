@@ -5,11 +5,8 @@
 .list-wrap {width: 1024px;text-align: left;margin: 0 auto;}
 .list-wrap ul {display: flex;justify-content: space-between;}
 .list-wrap ul ~ ul {margin-top: 20px;}
-<<<<<<< HEAD
 .list-wrap ul.bot .cont {height: 263px;box-sizing: border-box;}
-=======
-.list-wrap ul.bot .cont {height: 263px;box-sizing: border-box;} 
->>>>>>> css2
+.list-wrap ul.bot .cont {height: 263px;box-sizing: border-box;}
 .list-wrap li {display: inline-block;vertical-align: top;font-size: 14px;list-style: none;}
 .list-wrap li .cont {position: relative;}
 .list-wrap li.border .cont {border: 3px solid #000;}
@@ -28,10 +25,7 @@
 .list-wrap .drive .cont span {padding-top: 230px;background: url(rail_0.png) center 10px no-repeat;background-size: auto 210px;font-weight: 700;width: 100%;}
 .list-wrap .drive .cont span.positive {background-image: url(rail_1.png);}
 .list-wrap .drive .cont span.negative {background-image: url(rail_2.png);}
-<<<<<<< HEAD
-=======
 .list-wrap .drive .cont span.normal {background-image: url(rail_0.png);}
->>>>>>> css2
 
 .list-wrap .arm {width: 279px;}
 .list-wrap .arm .cont {height: 252px;background: url(img_arm.png) no-repeat;background-size: contain;}
@@ -40,8 +34,4 @@
 .list-wrap .arm .txt-group span {display: block;font-size: 15px;font-weight: 700;letter-spacing: -1px;}
 .list-wrap .arm .txt-group span + span {margin-top: 20px;}
 .list-wrap .arm .txt-group span:nth-child(5) {margin-top: 25px;}
-<<<<<<< HEAD
 .list-wrap .arm .fc-green {color: #00b050;}
-=======
-.list-wrap .arm .fc-green {color: #00b050;}
->>>>>>> css2

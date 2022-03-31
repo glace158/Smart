@@ -20,12 +20,6 @@ $(document).on('click','#socketTest',function(){
 	});
 });
 
-    socket.on('test1',function(data){
-    num = data.num;
-    console.log("server told : "+ data.num);
-	});
-});
-
 function onloadcam1(){
     var time = new Date().getTime();
     console.log("frame");
@@ -42,7 +36,6 @@ var xframe = 400;
 var yframe = 200;
 
 function setup() {
-<<<<<<< HEAD
   createCanvas(xframe, yframe);
   
   background(0);
@@ -62,9 +55,6 @@ function setup() {
     let dtext = maxdis / linenum * i;
     text(dtext + 'm', xframe/2, yframe - ((yframe/linenum) * i * 0.96));
   }
-=======
-  createCanvas(100, 100);
->>>>>>> css2
 }
 
 var xframe = 500;
