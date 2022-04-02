@@ -1,7 +1,6 @@
 var angle = 90;
 var distance = 9;
 var num = 0;
-var num2 = 0;
 var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
 
 socket.on('connect',function(ret){
@@ -19,17 +18,6 @@ $(document).on('click','#socketTest',function(){
     console.log("server told2 : "+ data.angle);
 	});
 });
-
-function onloadcam1(){
-    var time = new Date().getTime();
-    console.log("frame");
-    document.getElementById("cam1").src="/video_feed1?time" + time;
-  }
-
-function onloadcam2(){
-    var time = new Date().getTime();
-    document.getElementById("cam2").src="/video_feed2?time" + time;
-  }
 
 
 var xframe = 400;

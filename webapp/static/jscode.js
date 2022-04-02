@@ -60,8 +60,8 @@ function set_key(key){
 
 function set_speed(motor_num, speed){
 	set_control("motor", motor_num, speed);
-		let result = document.querySelector(driveid[motor_num]);
-		val = String(speed);
+	let result = document.querySelector(driveid[motor_num]);
+	val = String(speed);
 	result.innerHTML = val;
 }
 
