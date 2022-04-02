@@ -37,14 +37,14 @@ servos.append((14, 15))
 servos.append((18, 23))
 ##########
 
-#    cameras = []
-#    cameras.append(cv2.VideoCapture(0))
-#    cameras.append(cv2.VideoCapture(2))
+    cameras = []
+    cameras.append(cv2.VideoCapture(0))
+    cameras.append(cv2.VideoCapture(2))
     
-#    cameras[0].set(3, 80)
-#    cameras[0].set(4, 40)
-#    print(cameras[0].get(3))
-#    print(cameras[0].get(4))
+    cameras[0].set(3, 80)
+    cameras[0].set(4, 40)
+    print(cameras[0].get(3))
+    print(cameras[0].get(4))
 
 
 q1 = Queue()
@@ -64,7 +64,7 @@ def gen_frames(camera, queue, prev_time):
             prev_time = time.time()
             ret, buffer = cv2.imencode('.png', frame)
             frame = buffer.tobytes()
-#             print("frame")
+
             queue.put(b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
             #yield (b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
 
@@ -85,12 +85,12 @@ def video_feed2():
 @app.route('/')
 def main():
     
-#    thread1 = Thread(target=gen_frames, args=(cameras[0], q1,prev_time1,))
-#    thread2 = Thread(target=gen_frames, args=(cameras[1], q2,prev_time2,))
-#    thread1.daemon = True
-#    thread2.daemon = True
-#    thread1.start()
-#    thread2.start()
+    thread1 = Thread(target=gen_frames, args=(cameras[0], q1,prev_time1,))
+    thread2 = Thread(target=gen_frames, args=(cameras[1], q2,prev_time2,))
+    thread1.daemon = True
+    thread2.daemon = True
+    thread1.start()
+    thread2.start()
 
     return render_template('index.html')
 
@@ -127,9 +127,6 @@ def testEvent(data):
     servo2.servo_pos(radar_servo, radar_degree, 30, 150)
     distance = radar.get_distance()
     emit('test', {"distance": distance, "angle": radar_degree},callback=session.get('test'))
-
-def addnum(num1):
-    return num1 + 1
 
 if __name__ == '__main__':
 
