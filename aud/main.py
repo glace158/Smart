@@ -9,7 +9,7 @@ app = Flask(__name__)
  
 
 camera1 = cv2.VideoCapture(1)  # use 0 for web camera
-camera2 = cv2.VideoCapture(3)
+camera2 = cv2.VideoCapture(2)
  
 
 def gen_frames(camera):  # generate frame by frame from camera

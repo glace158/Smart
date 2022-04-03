@@ -3,12 +3,11 @@ from flask_socketio import SocketIO, send, emit
 import motor
 import servo2
 import radar
-import cv2
-from queue import Queue
+import camera
 import RPi.GPIO as GPIO
 from threading import Thread
-import asyncio
 import time
+
 
 
 app = Flask(__name__)
@@ -33,60 +32,37 @@ tik = -1
 #servo pin
 servos = []
 
-servos.append((14, 15)) 
-servos.append((18, 23))
+servos.append(servo2.Servo((14, 15)))
+servos.append(servo2.Servo((18, 23)))
+servos.append(servo2.Servo(24))
 ##########
 
-    cameras = []
-    cameras.append(cv2.VideoCapture(0))
-    cameras.append(cv2.VideoCapture(2))
-    
-    cameras[0].set(3, 80)
-    cameras[0].set(4, 40)
-    print(cameras[0].get(3))
-    print(cameras[0].get(4))
+cameras = []
+cameras.append(camera.Camera(0, 12))
+cameras.append(camera.Camera(2, 12))
 
+@app.route('/video_feed1/<state>')
+def video_feed1(state):
+    print("call", state)
+    if(int(state)):
+        cameras[0].set_state(True)
+        return Response( cameras[0].get_q() , mimetype='multipart/x-mixed-replace; boundary=frame')
+    cameras[0].set_state(False)
+    return "ok"
 
-q1 = Queue()
-q2 = Queue()
-prev_time1 = 0
-prev_time2 = 0
-fps = 12
-def gen_frames(camera, queue, prev_time):  
-    
-    while True:
-        success, frame = camera.read()
-            
-        current_time = time.time() - prev_time
-        if (not success):
-            break
-        elif(success is True) and (current_time > 1./ fps):
-            prev_time = time.time()
-            ret, buffer = cv2.imencode('.png', frame)
-            frame = buffer.tobytes()
-
-            queue.put(b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
-            #yield (b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
-
-@app.route('/video_feed/<int:num>')
-def video_feed(num):
-    print("cam",num)
-    return Response( q1.get() , mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/video_feed1')
-def video_feed1():
-    return Response( q1.get() , mimetype='multipart/x-mixed-replace; boundary=frame') 
-
-@app.route('/video_feed2')
-def video_feed2():
-    return Response( q2.get(), mimetype='multipart/x-mixed-replace; boundary=frame') 
+@app.route('/video_feed2/<state>')
+def video_feed2(state):
+    if(int(state)):
+        cameras[1].set_state(True)
+        return Response( cameras[1].get_q() , mimetype='multipart/x-mixed-replace; boundary=frame')
+    cameras[1].set_state(False)
+    return "ok"
 #####
 
 @app.route('/')
 def main():
-    
-    thread1 = Thread(target=gen_frames, args=(cameras[0], q1,prev_time1,))
-    thread2 = Thread(target=gen_frames, args=(cameras[1], q2,prev_time2,))
+    thread1 = Thread(target=cameras[0].gen_frames, args=())
+    thread2 = Thread(target=cameras[1].gen_frames, args=())   
     thread1.daemon = True
     thread2.daemon = True
     thread1.start()
@@ -106,12 +82,7 @@ def mymoter(num, speed):
 def myservo(num, degree):
     try:
         print("servo", num, ": ",degree)
-        if(type(servos[int(num)]) == type(())):
-            servo2.servo_pos(servos[int(num)][0], int(degree), 0, 180)
-            servo2.servo_pos(servos[int(num)][1], 180 - int(degree), 0,180)
-            return "ok"
-        
-        servo2.servo_pos(servos[int(num)], int(degree), 0, 180)
+        servos[int(num)].servo_pos(int(degree))
         return "ok"
     except:
         return "fail"
