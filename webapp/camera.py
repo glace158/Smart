@@ -9,7 +9,7 @@ class Camera:
         self.fps = fps
         self.prev_time = 0
         self.state = state
-        
+        self.cam.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
         self.cam.set(3, 80)
         self.cam.set(4, 40)
         print("cam", cam_num, self.cam.get(3))
