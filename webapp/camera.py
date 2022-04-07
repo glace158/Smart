@@ -33,7 +33,7 @@ class Camera:
     def set_state(self, state):
         self.state = state
     
-    def __clear_q(self):
+    def clear_q(self):
         while(not self.q.empty()):
             self.q.get()
         

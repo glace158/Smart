@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, request, Response
 from flask_socketio import SocketIO, send, emit
 import motor
+import motor2
 import servo2
 import radar
 import camera
@@ -8,22 +9,17 @@ import RPi.GPIO as GPIO
 from threading import Thread
 import time
 
-
-
 app = Flask(__name__)
 socketio = SocketIO(app)
 
 GPIO.setmode(GPIO.BCM)
 
 #motor pin
-en = [2, 17, 10, 0]
-ina = [3, 27, 9, 5]
-inb = [4, 22, 11, 6]
 
 motors = []
-
-for i in range(4):
-    motors.append( motor.set_motor(en[i], ina[i], inb[i]) )
+motors.append((motor2.Motor(2, 3, 4), motor2.Motor(17, 27, 22)))
+motors.append((motor2.Motor(10, 9, 11), motor2.Motor(0, 5, 6)))
+    
 
 #radar servo
 radar_servo = 12
@@ -43,7 +39,6 @@ cameras.append(camera.Camera(2, 12))
 
 @app.route('/video_feed1/<state>')
 def video_feed1(state):
-    print("call", state)
     if(int(state)):
         cameras[0].set_state(True)
         return Response( cameras[0].get_q() , mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -73,7 +68,13 @@ def main():
 @app.route('/motor/<num>/<speed>')
 def mymoter(num, speed):
     try:
-        motor.set_motor_contorl(motors[int(num)], ina[int(num)], inb[int(num)], int(speed))
+        if ( type(motors[int(num)]) != type(()) ):
+            motors[int(num)].motor_speed(int(speed))
+        else:
+            motors[int(num)][0].motor_speed(int(speed))
+            motors[int(num)][1].motor_speed(int(speed))
+        #motor2.dual_speed(motors[int(num)], int(speed))
+        #motor.set_motor_contorl(motors[int(num)], ina[int(num)], inb[int(num)], int(speed))
         return "ok"
     except:
         return "fail"  

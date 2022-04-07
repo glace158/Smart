@@ -1,7 +1,7 @@
 import cv2
 
 
-cap1 = cv2.VideoCapture(2, cv2.CAP_V4L)
+cap1 = cv2.VideoCapture(0, cv2.CAP_V4L)
 cap1.set(3, 80)
 cap1.set(4, 40)
 

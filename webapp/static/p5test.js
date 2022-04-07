@@ -1,5 +1,5 @@
 var angle = 90;
-var distance = 9;
+var distance = 0;
 var num = 0;
 var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
 
@@ -106,7 +106,7 @@ function drawobject(){
 
 function drawLine() { 
   push()
-  strokeWeight(9);
+  strokeWeight(2);
   stroke(0,255,0, 20);
   translate(xframe/2, yframe);  
   line(0,0,((yframe * 0.94) *cos(radians(180-angle))),-(yframe * 0.94) *sin(radians(180-angle)));
