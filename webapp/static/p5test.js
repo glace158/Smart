@@ -1,7 +1,8 @@
 var angle = 30;
 var minangle = 30;
 var maxangle = 150;
-var distance = 9;
+var distance = 0;
+var num = 1;
 
 var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
 
@@ -10,20 +11,41 @@ socket.on('connect',function(ret){
 	});
 
 
-$(document).on('click','#socketTest',function(){
+function emitradar(){
     socket.emit('testSocket',{num});
     
     socket.on('test',function(data){
     distance = data.distance * 0.01;
     angle = data.angle;
-    console.log("server told : "+ data.distance);
-    console.log("server told2 : "+ data.angle);
-	});
-});
+  });
+} 
 
+const timer= ms => new Promise(res=>setTimeout(res,ms))
 
+async function load(){
+  while(true){
+    radar_controll();
+    await timer(80);
+    }
+  }
+  
+//setInterval(radar_controll, 0);
 
-var xframe = 400;
+function radar_controll(){
+    var ad = fetch("/radar")
+    .then(response=> {console.log(response); return response.text()})
+    .then(data=>{
+	console.log(data);
+	const arr = data.split(" ");
+	distance = parseFloat(arr[0]);
+	angle = parseInt(arr[1]);
+	console.log(distance);
+	console.log(angle);
+      });
+    
+  }
+
+var xframe = 500;
 var yframe = xframe / 2;
 
 function setup() {
@@ -31,7 +53,7 @@ function setup() {
   background(0);
 }
 
-let maxdis = 15;
+let maxdis = 5;
 let state = -1;
 
 function draw() {
@@ -44,12 +66,12 @@ function draw() {
 
   fillbackground();
   drawtext();
-  drawLine();
+  //drawLine();
   drawobject();
 }
 
 function fillbackground(){
-  let fadeangle = 30;
+  let fadeangle = 1;
   if((angle < maxangle && angle > (maxangle - fadeangle)) || (angle > minangle && angle < ( minangle + fadeangle) ) ){
       
     noStroke();
@@ -66,7 +88,7 @@ function drawtext(){
   fill(0)
   rect(xframe / 100, yframe/ 35, xframe / 5, yframe / 8);
   fill(255)
-  text("Distance: " + distance.toFixed(2) + "m" , xframe / 100, yframe/ 15);
+  text("Distance: " + distance + "m" , xframe / 100, yframe/ 15);
   text("Degree: " + parseInt(angle), xframe / 100, yframe/ 8);
 }
 
@@ -95,10 +117,10 @@ function drawobject(){
   strokeWeight(xframe * 0.005);
   translate(xframe/2, yframe);  
   let pixs_distance = (yframe * 0.94) / maxdis * (distance);
-  //stroke(128,128,128);
-  //line(0,0,(pixs_distance *cos(radians(180-angle))),-pixs_distance *sin(radians(180-angle)));
+  stroke(128,128,128);
+  line(0,0,(pixs_distance *cos(radians(angle))),-pixs_distance *sin(radians(angle)));
   stroke(180,0,0);
-  ellipse(pixs_distance*cos(radians(180-angle)),-pixs_distance*sin(radians(180-angle)), 2);
+  ellipse(pixs_distance*cos(radians(angle)),-pixs_distance*sin(radians(angle)), 2);
 
 }
 
@@ -107,6 +129,6 @@ function drawLine() {
   strokeWeight(xframe * 0.005);
   stroke(0,255,0, 20);
   translate(xframe/2, yframe);  
-  line(0,0,((yframe * 0.94) *cos(radians(180-angle))),-(yframe * 0.94) *sin(radians(180-angle)));
+  line(0,0,((yframe * 0.94) *cos(radians(angle))),-(yframe * 0.94) *sin(radians(angle)));
   pop();
 }

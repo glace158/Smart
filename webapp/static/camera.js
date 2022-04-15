@@ -2,8 +2,8 @@ var done = false;
 
 window.onload = function(){
 	done = true;
-	onloadcam1(1);
-	onloadcam2(1);
+	//onloadcam1(1)
+	//onloadcam2(1)
 	console.log("load done");
 	}
 
@@ -23,7 +23,6 @@ function camset(){
 function onloadcam1(state){
 	if(done == true){
 			var time = new Date().getTime();
-			console.log("frame");
 			document.getElementById("cam1").src="/video_feed1/" + state + "?time" + time;
 		}
   }

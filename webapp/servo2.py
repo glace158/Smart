@@ -12,7 +12,7 @@ def servo_pos(pwm, degree , min=0, max=180):
     
     duty = 600 + 10 * degree
     pi.set_servo_pulsewidth(pwm, duty)
-
+    
 class Mode(Enum):
     SINGLE = 1
     DUAL = 2
@@ -43,4 +43,3 @@ class Servo:
             
             duty = 600 + 10 * (180 - degree)
             pi.set_servo_pulsewidth(self.pwm[1], duty)
-        

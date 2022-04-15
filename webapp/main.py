@@ -17,8 +17,8 @@ GPIO.setmode(GPIO.BCM)
 #motor pin
 
 motors = []
-motors.append((motor2.Motor(2, 3, 4), motor2.Motor(17, 27, 22)))
-motors.append((motor2.Motor(10, 9, 11), motor2.Motor(0, 5, 6)))
+motors.append((motor2.Motor(2, 3), motor2.Motor(4,17)))
+motors.append((motor2.Motor(27,22), motor2.Motor(10,9)))
     
 
 #radar servo
@@ -85,6 +85,21 @@ def myservo(num, degree):
         print("servo", num, ": ",degree)
         servos[int(num)].servo_pos(int(degree))
         return "ok"
+    except:
+        return "fail"
+
+@app.route('/radar')
+def myradar():
+    try:
+        global radar_degree
+        global tik
+        if(radar_degree < 30 or radar_degree > 150):
+            tik *= -1
+    
+        radar_degree += tik
+        servo2.servo_pos(radar_servo, radar_degree, 30, 150)
+        distance = radar.get_distance() * 0.01
+        return "%d %d" % (distance, radar_degree)
     except:
         return "fail"
 
