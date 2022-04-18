@@ -36,6 +36,7 @@ class Camera:
     def clear_q(self):
         while(not self.q.empty()):
             self.q.get()
+        print("q_empty")
         
         
     def get_q(self):

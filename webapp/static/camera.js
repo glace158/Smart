@@ -2,8 +2,9 @@ var done = false;
 
 window.onload = function(){
 	done = true;
-	//onloadcam1(1)
-	//onloadcam2(1)
+	onloadcam1(1)
+	onloadcam2(1)
+	setInterval(radar_controll, 8000);
 	console.log("load done");
 	}
 
@@ -12,16 +13,18 @@ function camset(){
 		if(result.innerText == "on"){
 			var time = new Date().getTime();
 				onloadcam1(0);
+				onloadcam2(0);
 				result.innerHTML = "off";
 			}
 		else if(result.innerText == "off"){
 				onloadcam1(1);
+				onloadcam2(1);
 				result.innerHTML = "on";
 			}
 	}
     
 function onloadcam1(state){
-	if(done == true){
+	if(done == true && state){
 			var time = new Date().getTime();
 			document.getElementById("cam1").src="/video_feed1/" + state + "?time" + time;
 		}

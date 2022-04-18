@@ -35,6 +35,7 @@ class Radar:
             for i in range(8):
                 buffer_RTT.append(self.ser.read(1))
                 time.sleep(0.002)
+            
             if(buffer_RTT[0]==b'\xff'):
                 if(buffer_RTT[1]== b'\xff'):
                     YCTa=buffer_RTT[2]
@@ -46,24 +47,21 @@ class Radar:
 
     def move_radar(self):
         data = {}
-        while (self.degree >= self.mindegree and self.degree <= self.maxdegree):
-            self.radar_servo.servo_pos(self.degree)
-            distance = round(self.get_distance() * 0.01, 2)
+        while True:
+            while (self.degree >= self.mindegree and self.degree <= self.maxdegree):
+                self.degree += self.tik
+                self.radar_servo.servo_pos(self.degree)
+                distance = round(self.get_distance() * 0.01, 2)
+                data[self.degree] = distance
             
-            for i in range(self.degree, self.degree + self.tik, -1 if self.tik < 0 else 1):
-                data[i] = distance
-                if(i < self.mindegree or i > self.maxdegree):
-                    break
-            
-            self.degree += self.tik
-            
-        self.tik *= -1
-        self.degree = self.maxdegree if self.tik < 0 else self.mindegree
-        print(data.items())
-        self.q.put(data)
-        return data
+            self.tik *= -1
+            self.degree = self.maxdegree if self.tik < 0 else self.mindegree
+            print(data.items())
+            self.q.put(data)
+            data.clear()
             
     def get_q(self):
+        print(self.q.qsize())
         while (self.q.qsize() > 1):
             self.q.get()
             

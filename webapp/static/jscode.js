@@ -75,7 +75,7 @@ function set_degree(servo_num, state){
 	    key = armid[servo_num].replace("#", ""),
 		val = String(degree_arr[servo_num]);
 		
-	result.innerHTML = key+":"+val;
+	result.innerHTML = key+":  "+val;
 	set_control("servo", servo_num, degree_arr[servo_num]);
 	  
 }

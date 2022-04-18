@@ -4,6 +4,7 @@ import motor
 import motor2
 import servo2
 import radar
+import radar2
 import camera
 import RPi.GPIO as GPIO
 from threading import Thread
@@ -22,9 +23,8 @@ motors.append((motor2.Motor(27,22), motor2.Motor(10,9)))
     
 
 #radar servo
-radar_servo = 12
-radar_degree = 90
-tik = -1
+radar1 = radar.Radar(12, 10, 30, 150)
+#radar1 = radar2.Radar(12, 5, 30, 150)
 #servo pin
 servos = []
 
@@ -62,6 +62,9 @@ def main():
     thread2.daemon = True
     thread1.start()
     thread2.start()
+    #thread3 = Thread(target=radar1.move_radar(), args=())
+    #thread3.daemon = True
+    #thread3.start()
 
     return render_template('index.html')
 
@@ -91,15 +94,7 @@ def myservo(num, degree):
 @app.route('/radar')
 def myradar():
     try:
-        global radar_degree
-        global tik
-        if(radar_degree < 30 or radar_degree > 150):
-            tik *= -1
-    
-        radar_degree += tik
-        servo2.servo_pos(radar_servo, radar_degree, 30, 150)
-        distance = radar.get_distance() * 0.01
-        return "%d %d" % (distance, radar_degree)
+        return radar1.move_radar()
     except:
         return "fail"
 
@@ -107,7 +102,7 @@ def myradar():
 def testEvent(data):
     global radar_degree
     global tik
-    if(radar_degree < 30 or radar_degree > 150):
+    if(radar_degree <= 30 or radar_degree >= 150):
         tik *= -1
     
     radar_degree += tik
