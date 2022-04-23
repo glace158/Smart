@@ -3,16 +3,7 @@ from enum import Enum
 import time
 
 pi = pigpio.pi()
-
-def servo_pos(pwm, degree , min=0, max=180):
-    if degree > max:
-        degree = max
-    elif degree < min:
-        degree = min
-    
-    duty = 600 + 10 * degree
-    pi.set_servo_pulsewidth(pwm, duty)
-    
+ 
 class Mode(Enum):
     SINGLE = 1
     DUAL = 2
@@ -27,6 +18,11 @@ class Servo:
         self.pwm = pwm
         self.min = min
         self.max = max
+        
+        print("----------Servo----------")
+        print("Mode: ", self.mode)
+        print("PWM: ", self.pwm)
+        print("Degree: ", self.min, "~", self.max)    
     
     def servo_pos(self, degree):
         if degree > self.max:

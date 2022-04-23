@@ -1,9 +1,7 @@
 from flask import Flask, render_template, session, request, Response
 from flask_socketio import SocketIO, send, emit
-import motor
 import motor2
 import servo2
-import radar
 import radar2
 import camera
 import RPi.GPIO as GPIO
@@ -15,102 +13,98 @@ socketio = SocketIO(app)
 
 GPIO.setmode(GPIO.BCM)
 
-#motor pin
-
+#motor
 motors = []
 motors.append((motor2.Motor(2, 3), motor2.Motor(4,17)))
 motors.append((motor2.Motor(27,22), motor2.Motor(10,9)))
     
 
-#radar servo
-radar1 = radar.Radar(12, 10, 30, 150)
-#radar1 = radar2.Radar(12, 5, 30, 150)
-#servo pin
+#radar
+radar1 = radar2.Radar(12, 10, 30, 150)
+
+#servo
 servos = []
 
 servos.append(servo2.Servo((14, 15)))
 servos.append(servo2.Servo((18, 23)))
 servos.append(servo2.Servo(24))
-##########
 
+#camera
 cameras = []
 cameras.append(camera.Camera(0, 12))
 cameras.append(camera.Camera(2, 12))
 
-@app.route('/video_feed1/<state>')
-def video_feed1(state):
-    if(int(state)):
-        cameras[0].set_state(True)
-        return Response( cameras[0].get_q() , mimetype='multipart/x-mixed-replace; boundary=frame')
-    cameras[0].set_state(False)
-    return "ok"
-
-@app.route('/video_feed2/<state>')
-def video_feed2(state):
-    if(int(state)):
-        cameras[1].set_state(True)
-        return Response( cameras[1].get_q() , mimetype='multipart/x-mixed-replace; boundary=frame')
-    cameras[1].set_state(False)
-    return "ok"
-#####
-
+print("--------------------------")
 @app.route('/')
 def main():
-    thread1 = Thread(target=cameras[0].gen_frames, args=())
-    thread2 = Thread(target=cameras[1].gen_frames, args=())   
-    thread1.daemon = True
-    thread2.daemon = True
-    thread1.start()
-    thread2.start()
-    #thread3 = Thread(target=radar1.move_radar(), args=())
-    #thread3.daemon = True
-    #thread3.start()
-
     return render_template('index.html')
 
+@app.route('/start')
+def mystart():
+    try:
+        thread1 = Thread(target=cameras[0].gen_frames, args=())
+        thread2 = Thread(target=cameras[1].gen_frames, args=())   
+        thread1.daemon = True
+        thread2.daemon = True
+        thread1.start()
+        print("Thread1_Start.. done")
+        
+        thread2.start()
+        print("Thread2_Start.. done")
+        
+        thread3 = Thread(target=radar1.move_radar, args=())
+        thread3.daemon = True
+        thread3.start()
+        print("Thread3_Start.. done") 
+        return "ok"
+    except:
+        return "fail"
+
+#camera
+@app.route('/video_feed/<num>/<state>')
+def video_feed(num, state):
+    num = int(num)
+    if(int(state) == 1):
+        cameras[num].set_state(True)
+        cameras[num].clear_q()
+        return Response( cameras[num].get_q() , mimetype='multipart/x-mixed-replace; boundary=frame')
+    cameras[num].set_state(False)
+    return Response( cameras[num].loading() , mimetype='multipart/x-mixed-replace; boundary=frame')
+
+#motor
 @app.route('/motor/<num>/<speed>')
 def mymoter(num, speed):
     try:
+        print("Motor", num, ": ", speed)
         if ( type(motors[int(num)]) != type(()) ):
             motors[int(num)].motor_speed(int(speed))
         else:
             motors[int(num)][0].motor_speed(int(speed))
             motors[int(num)][1].motor_speed(int(speed))
-        #motor2.dual_speed(motors[int(num)], int(speed))
-        #motor.set_motor_contorl(motors[int(num)], ina[int(num)], inb[int(num)], int(speed))
         return "ok"
     except:
         return "fail"  
 
+#servo
 @app.route('/servo/<num>/<degree>')
 def myservo(num, degree):
     try:
-        print("servo", num, ": ",degree)
+        print("Servo", num, ": ",degree)
         servos[int(num)].servo_pos(int(degree))
         return "ok"
     except:
         return "fail"
 
+#radar
 @app.route('/radar')
 def myradar():
     try:
-        return radar1.move_radar()
+        return radar1.get_q()
     except:
         return "fail"
 
-@socketio.on('testSocket',namespace='/test')
-def testEvent(data):
-    global radar_degree
-    global tik
-    if(radar_degree <= 30 or radar_degree >= 150):
-        tik *= -1
-    
-    radar_degree += tik
-    servo2.servo_pos(radar_servo, radar_degree, 30, 150)
-    distance = radar.get_distance()
-    emit('test', {"distance": distance, "angle": radar_degree},callback=session.get('test'))
-
 if __name__ == '__main__':
-
-    socketio.run(app, host='0.0.0.0', port=8080)#, debug=True)
-    GPIO.cleanup()
+    try:
+        socketio.run(app, host='0.0.0.0', port=8080)#, debug=True)
+    except:
+        GPIO.cleanup()

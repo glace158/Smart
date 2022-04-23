@@ -3,13 +3,11 @@
 	<head>
 		<meta charset = "UTF-8">
 		<title>Home</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.min.js"></script>
 		<script language="javascript" type="text/javascript" src="./static/p5.min.js"></script>
-		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=4"></script>
-		<script type="text/javascript" src="./static/jscode.js?ver=2"></script>
-		<script type="text/javascript" src="./static/uicontroll.js?ver=2"></script>
-		<script type="text/javascript" src="./static/camera.js?ver=5"></script>
+		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=1"></script>
+		<script type="text/javascript" src="./static/jscode.js?ver=1"></script>
+		<script type="text/javascript" src="./static/uicontroll.js?ver=1"></script>
+		<script type="text/javascript" src="./static/camera.js?ver=4"></script>
 		<link rel="stylesheet" href = "{{ url_for('static', filename='style.css')}}">
 	</head>
 	<body>
@@ -19,14 +17,14 @@
             <li>
                 <p class="tit">RGB Camera</p>
                 <div class="cont">
-		     <img id="cam1" onload="onloadcam2(1);" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
-                </div>
+		     <img id="cam1" onload="onloadcam(1);" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
+		</div>
             </li>
             <li>
                 <p class="tit">Themal Camera</p>
                 <div class="cont">
-		    <img id="cam2" onload="onloadcam1(1);" src="{{ url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
-                </div>
+		    <img id="cam0" onload="onloadcam(0);" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
+		</div>
             </li>
             <li>
                 <p class="tit">Radar</p>
@@ -47,7 +45,7 @@
                         <dd>N/A</dd>
                         <dt>air quiality</dt>
                         <dd>N/A</dd>
-                        <dt>camera mode</dt>
+                        <dt>camera set</dt>
 			<dd onclick="camset()" id="cam_test">on</dd>
                         <dt>mic</dt>
                         <dd>off</dd>

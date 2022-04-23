@@ -11,12 +11,13 @@ class Motor:
         
         self.pwm = GPIO.PWM(EN, 100)
         self.pwm.start(0)
-            
-        #print(self.ina, self.inb, self.pwm)
+        
+        print("----------Motor----------")
+        print("PWM: ", self.pwm)
+        print("DIR: ", self.ina)
         
 
     def motor_speed(self, speed):
-        print(speed)
         self.pwm.ChangeDutyCycle(abs(speed))  
     
         if speed == 0:
@@ -28,10 +29,3 @@ class Motor:
         elif speed > 0:
             GPIO.output(self.ina, 1)
             #GPIO.output(self.inb, 0)
-    
-    @staticmethod
-    def dual_speed(motor, speed):
-        print(motor, speed)
-        print(type(motor))
-        #motor[0].motor_speed(speed)
-        #motor[1].motor_speed(speed)

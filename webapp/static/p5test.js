@@ -2,25 +2,6 @@ let angle = []
 var minangle = 30;
 var maxangle = 150;
 let distance = []
-var num = 1;
-var newwrite = false;
-
-var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
-
-socket.on('connect',function(ret){
-		console.log("connected");
-	});
-
-
-function emitradar(){
-    socket.emit('testSocket',{num});
-    
-    socket.on('test',function(data){
-    distance = data.distance * 0.01;
-    angle = data.angle;
-  });
-} 
-
 
 function radar_controll(){
     distance = [];
@@ -48,15 +29,9 @@ function setup() {
 let maxdis = 5;
 let state = -1;
 let i = 0;
-function draw() {
-  /*
-  if(angle > maxangle || angle < minangle){
-       state *= -1;
-     }
-  angle += state;
-  */
+var newwrite = false;
 
-  //drawtext();
+function draw() {
   
   if(newwrite){
       drawLine();
