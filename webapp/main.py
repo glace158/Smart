@@ -1,5 +1,5 @@
 from flask import Flask, render_template, session, request, Response
-from flask_socketio import SocketIO, send, emit
+#from flask_socketio import SocketIO, send, emit
 import motor2
 import servo2
 import radar2
@@ -9,7 +9,7 @@ from threading import Thread
 import time
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+#socketio = SocketIO(app)
 
 GPIO.setmode(GPIO.BCM)
 
@@ -105,6 +105,6 @@ def myradar():
 
 if __name__ == '__main__':
     try:
-        socketio.run(app, host='0.0.0.0', port=8080)#, debug=True)
+        app.run(host='0.0.0.0', port=8080)#, debug=True)
     except:
         GPIO.cleanup()
