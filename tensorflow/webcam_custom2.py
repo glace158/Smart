@@ -77,7 +77,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
                     required=True)
 parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
-                    default='model2000_F.tflite')
+                    default='F.tflite')
 parser.add_argument('--labels', help='Name of the labelmap file, if different than labelmap.txt',
                     default='labelmap.txt')
 parser.add_argument('--threshold', help='Minimum confidence threshold for displaying detected objects',
@@ -113,7 +113,7 @@ else:
 # If using Edge TPU, assign filename for Edge TPU model
 if use_TPU:
     # If user has specified the name of the .tflite file, use that name, otherwise use default 'edgetpu.tflite'
-    GRAPH_NAME = 'model2000_F_TPU.tflite'
+    GRAPH_NAME = 'F_edgetpu.tflite'
     #GRAPH_NAME = 'detect.tflite'
 
 # Get path to current working directory

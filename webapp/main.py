@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, request, Response
 #from flask_socketio import SocketIO, send, emit
 import motor2
+import motor3
 import servo2
 import radar2
 import camera
@@ -12,6 +13,8 @@ app = Flask(__name__)
 #socketio = SocketIO(app)
 
 GPIO.setmode(GPIO.BCM)
+startpin = 12
+GPIO.setup(startpin, GPIO.OUT)
 
 #motor
 motors = []
@@ -22,13 +25,14 @@ motors.append((motor2.Motor(27,22), motor2.Motor(10,9)))
 #radar
 radar1 = radar2.Radar(12, 10, 30, 150)
 
-#servo
+#servo 
 servos = []
-
-servos.append(servo2.Servo((14, 15)))
-servos.append(servo2.Servo((18, 23)))
-servos.append(servo2.Servo(24))
-
+servos.append(servo2.Servo(14))#grip 0/60 init 0
+servos.append(servo2.Servo(15))#wrist 0/140 -1 init 90
+servos.append(servo2.Servo(18))#wristroll 0/180 init 90
+servos.append(servo2.Servo(23,24))#elbow 16/144 init 16
+servos.append(servo2.Servo(25,8))#shoulder 16/160 init 16
+arm_motor = motor3.Motor2(21, 20, 16)
 #camera
 cameras = []
 cameras.append(camera.Camera(0, 12))
@@ -105,6 +109,8 @@ def myradar():
 
 if __name__ == '__main__':
     try:
+        GPIO.output(startpin, True)
         app.run(host='0.0.0.0', port=8080)#, debug=True)
+        GPIO.output(startpin, False)
     except:
         GPIO.cleanup()
