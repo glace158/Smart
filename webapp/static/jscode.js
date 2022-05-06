@@ -4,7 +4,7 @@ window.addEventListener("keyup", checkKeyup, false);
 var degree_arr = [0,0,0,0,0,0];
 var moter_keys = [['z', 'a', 'q'], ['x', 's', 'w']];
 var servo_keys = ['p','o', 'i', 'u', 'y', 't'];
-var armid = ["#Grip", "#Wrist", "#Wrist_Roll", "#Elbow", "#Shoulder", "#Waist"]
+var armid = ["#Grip", "#Wrist", "#Wrist_Roll", "#Elbow", "#Shoulder", "#Waist"]=
 var driveid = ["#L_Speed", "#R_Speed"]
 var key_dic = {};
 

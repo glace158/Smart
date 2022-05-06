@@ -3,87 +3,141 @@
 	<head>
 		<meta charset = "UTF-8">
 		<title>Home</title>
+        
 		<script language="javascript" type="text/javascript" src="./static/p5.min.js"></script>
 		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=1"></script>
 		<script type="text/javascript" src="./static/jscode.js?ver=1"></script>
 		<script type="text/javascript" src="./static/uicontroll.js?ver=1"></script>
-		<script type="text/javascript" src="./static/camera.js?ver=4"></script>
+		
 		<link rel="stylesheet" href = "{{ url_for('static', filename='style.css')}}">
+        
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js" integrity="sha256-hlKLmzaRlE8SCJC1Kw8zoUbU8BxA+8kR3gseuKfMjxA=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="./static/camera.js?ver=4"></script>    	
+        <link rel="stylesheet" href="./style.css">
 	</head>
 	<body>
-		<dir class = "container">    
-			<div class="list-wrap">
-        <ul>
-            <li>
-                <p class="tit">RGB Camera</p>
-                <div class="cont">
-		     <img id="cam1" onload="onloadcam(1);" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
-		</div>
-            </li>
-            <li>
-                <p class="tit">Themal Camera</p>
-                <div class="cont">
-		    <img id="cam0" onload="onloadcam(0);" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
-		</div>
-            </li>
-            <li>
-                <p class="tit">Radar</p>
-                <div class="cont">
-			<main>
-			</main>
-                </div>
-            </li>
-        </ul>
-        <ul class="bot">
-            <li class="border info">
-                <p class="tit">Info</p>
-                <div class="cont">
-                    <dl>
-                        <dt>outside temperature</dt>
-                        <dd>N/A</dd>
-                        <dt>inside temperature</dt>
-                        <dd>N/A</dd>
-                        <dt>air quiality</dt>
-                        <dd>N/A</dd>
-                        <dt>camera set</dt>
-			<dd onclick="camset()" id="cam_test">on</dd>
-                        <dt>mic</dt>
-                        <dd>off</dd>
-                        <dt>sound mute</dt>
-                        <dd>off</dd>
-                    </dl>
-                </div>
-            </li>
-            <li class="border drive">
-                <p class="tit">Drive Control</p>
-                <div class="cont">
-                    <span>L Speed: <em id="L_Speed">0</em></span>
-                    <span>R Speed: <em id="R_Speed">0</em></span>
-                </div>
-            </li>
-            <li class="border arm">
-                <p class="tit">Arm Control</p>
-                <div class="cont">
-                    <div class="txt-group">
-                        <span id="Grip">Grip: 0</span>
-                        <span id="Wrist">Wrist: 0</span>
-                        <span id="Wrist_Roll">Wrist_Roll: 0</span>
-                        <span id="Elbow">Elbow: 0</span>
-                        <span id="Shoulder">Shoulder: 0</span>
-                        <span id="Waist">Waist: 0</span>
+		<div class="container">            
+			<div class="list-wrap">           
+            <ul>
+                <li>
+                    <p class="tit">RGB Camera</p>
+                    <div class="cont" class="select01">
+                        <img id="cam1" onload="onloadcam();" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
                     </div>
-                </div>
-            </li>
-            <li>
-                <p class="tit">Arm Camera</p>
-                <div class="cont">
-                </div>
-            </li>
-        </ul>
+                </li>
+                <li>
+                    <p class="tit">Themal Camera</p>
+                    <div class="cont" class="select02">
+                        <img id="cam0" onload="onloadcam();" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
+                    </div>
+                </li>
+                <li>
+                    <p class="tit">Radar</p>
+                    <div class="cont" class="select03">
+	    		        <img id="cam0" onload="onloadcam();" src="{{url_for('static', filename = 'cameraload.png')}}"width="400"height="250">
+                    </div>
+                </li>
+            </ul>
+            <ul class="bot">
+                <li class="border info">
+                    <p class="tit">Info</p>
+                    <div class="cont">
+                        <dl>
+                            <dt>outside temperature</dt>
+                            <dd>N/A</dd>
+                            <dt>inside temperature</dt>
+                            <dd>N/A</dd>
+                            <dt>air quiality</dt>
+                            <dd>N/A</dd>
+                            <dt>camera set</dt>
+                <dd onclick="camset()" id="cam_test">on</dd>
+                            <dt>mic</dt>
+                            <dd>off</dd>
+                            <dt>sound mute</dt>
+                            <dd>off</dd>
+                        </dl>
+                    </div>
+                </li>
+                <li class="border drive">
+                    <p class="tit">Drive Control</p>
+                    <div class="cont">
+                        <span>L Speed: <em id="L_Speed">0</em></span>
+                        <span>R Speed: <em id="R_Speed">0</em></span>
+                    </div>
+                </li>
+                <li class="border arm">
+                    <p class="tit">Arm Control</p>
+                    <div class="cont">
+                        <div class="txt-group">
+                            <span id="Grip">Grip: 0</span>
+                            <span id="Wrist">Wrist: 0</span>
+                            <span id="Wrist_Roll">Wrist_Roll: 0</span>
+                            <span id="Elbow">Elbow: 0</span>
+                            <span id="Shoulder">Shoulder: 0</span>
+                            <span id="Waist">Waist: 0</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="border option">
+                    <p class="tit">Option</p>
+                    <div class="cont">
+                        <ul>
+                            <li>
+                                <strong class="dl-tit">Camera Setting</strong>
+                                <dl>
+                                    <dt>State</dt>
+                                    <dd>ON</dd>
+                                    <dt>RGB</dt>
+                                    <dd class="select-area">
+                                        <select data-select="select01">
+                                            <option value="0">cam0</option>
+                                            <option value="2">cam2</option>
+                                            <option value="4">cam4</option>
+                                        </select>
+                                    </dd>
+                                    <dt>Thermal</dt>
+                                    <dd class="select-area">
+                                        <select data-select="select02">
+                                            <option value="0">cam0</option>
+                                            <option value="2">cam2</option>
+                                            <option value="4">cam4</option>
+                                        </select>
+                                    </dd>
+                                    <dt>Arm</dt>
+                                    <dd class="select-area">
+                                        <select data-select="select03">
+                                            <option value="0">cam0</option>
+                                            <option value="2">cam2</option>
+                                            <option value="4">cam4</option>
+                                        </select>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <strong class="dl-tit">Arm Setting</strong>
+                                <dl>
+                                    <dt>speed</dt>
+                                    <dd>100</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <strong class="dl-tit">Radar Setting</strong>
+                                <dl>
+                                    <dt>State</dt>
+                                    <dd>ON</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
 </div>
 
 
 	</body>
 </html>
+

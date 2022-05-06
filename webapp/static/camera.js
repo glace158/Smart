@@ -5,36 +5,37 @@ var armcamnum = 0;
 window.onload = function(){
 	done = true;
 	camstate = 1;
-	onloadcam(0);
-	onloadcam(1);
 	setInterval(radar_controll, 1500);
 	fetch("/start");
 	console.log("Load.. done");
-	}
+}
+
+$(function(){
+	onloadcam();
+	$('.select-area select').on('change', function(){
+		onloadcam($(this).val(), $(this).attr('data-select'));
+	});
+});
 
 function camset(){
-		let result = document.querySelector('#cam_test');
-		if(result.innerText == "on"){
-			var time = new Date().getTime();
-				result.innerHTML = "off";
-				camstate = 0;
-			}
-		else if(result.innerText == "off"){
-				result.innerHTML = "on";
-				camstate = 1;
-			}
+	let result = document.querySelector('#cam_test');
+	if(result.innerText == "on"){
+		var time = new Date().getTime();
+		result.innerHTML = "off";
+		camstate = 0;
 	}
+	else if(result.innerText == "off"){
+		result.innerHTML = "on";
+		camstate = 1;
+	}
+}
 
-function onloadcam(num){
+function onloadcam(num, layout){
 	var time = new Date().getTime();
-	
-	if(done && armcamstate && num == 1){
-			document.getElementById("cam" + num).src="/video_feed/" + armcamnum + "/" + camstate + "?time" + time;
-		}
-	else if(done){
-			document.getElementById("cam" + num).src="/video_feed/" + num + "/" + camstate + "?time" + time;
-		}
-  }
+	var src;
+	src = "/video_feed/" + num + "/" + camstate + "?time" + time;
+	$('.' + layout).attr('src', src);
+}
   
 window.addEventListener("keydown", (e) => {
 	if(servo_keys.includes(e.key.toLowerCase())){
@@ -44,4 +45,3 @@ window.addEventListener("keydown", (e) => {
 		armcamstate =false;
 	}
 });
-    
