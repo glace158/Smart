@@ -71,7 +71,8 @@ MODEL_NAME = 'Sample_TFLite_model'
 GRAPH_NAME = 'F.tflite'
 LABELMAP_NAME = 'labels.txt'
 min_conf_threshold = float(0.6)
-imW, imH =  '1280', '720'
+resW, resH = '1280', '720'
+imW, imH = int(resW), int(resH)
 use_TPU = 'store_true'
 
 # Import TensorFlow libraries
@@ -138,7 +139,7 @@ input_std = 127.5
 # Initialize video stream
 
 
-class DetectCamera:
+class DetectCam:
     #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
     def __init__(self, cam_num, fps, state=True):
         self.videostream = VideoStream(cam_num=0, resolution=(imW,imH),framerate=fps).start()

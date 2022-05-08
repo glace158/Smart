@@ -1,10 +1,10 @@
 from flask import Flask, render_template, session, request, Response
 #from flask_socketio import SocketIO, send, emit
 import motor2
-import motor3
 import servo2
 import radar2
 import camera
+import webcam_custom2
 import RPi.GPIO as GPIO
 from threading import Thread
 import time
@@ -20,24 +20,24 @@ GPIO.setup(startpin, GPIO.OUT)
 motors = []
 motors.append((motor2.Motor(2, 3), motor2.Motor(4,17)))
 motors.append((motor2.Motor(27,22), motor2.Motor(10,9)))
-    
+motors.append(motor2.Motor(21, 20, 16))#arm motor
 
 #radar
 radar1 = radar2.Radar(12, 10, 30, 150)
 
 #servo 
 servos = []
-servos.append(servo2.Servo(14))#grip 0/60 init 0
-servos.append(servo2.Servo(15))#wrist 0/140 -1 init 90
-servos.append(servo2.Servo(18))#wristroll 0/180 init 90
-servos.append(servo2.Servo(23,24))#elbow 16/144 init 16
-servos.append(servo2.Servo(25,8))#shoulder 16/160 init 16
-arm_motor = motor3.Motor2(21, 20, 16)
+servos.append(servo2.Servo(14, 0, 60))#grip 0/60 init 0
+servos.append(servo2.Servo(15, 0, 140))#wrist 0/140 -1 init 90
+servos.append(servo2.Servo(18, 0, 180))#wristroll 0/180 init 90
+servos.append(servo2.Servo((23,24), 16, 144))#elbow 16/144 init 16
+servos.append(servo2.Servo((25,8), 16, 160))#shoulder 16/160 init 16
+
 #camera
 cameras = []
 cameras.append(camera.Camera(0, 12))
 cameras.append(camera.Camera(2, 12))
-
+cameras.append(webcam_custom2.DetectCamera(4, 12))
 print("--------------------------")
 @app.route('/')
 def main():
@@ -47,19 +47,24 @@ def main():
 def mystart():
     try:
         thread1 = Thread(target=cameras[0].gen_frames, args=())
-        thread2 = Thread(target=cameras[1].gen_frames, args=())   
         thread1.daemon = True
-        thread2.daemon = True
         thread1.start()
         print("Thread1_Start.. done")
-        
+
+        thread2 = Thread(target=cameras[1].gen_frames, args=())   
+        thread2.daemon = True
         thread2.start()
         print("Thread2_Start.. done")
         
-        thread3 = Thread(target=radar1.move_radar, args=())
+        thread3 = Thread(target=cameras[2].gen_frames, args=())   
         thread3.daemon = True
         thread3.start()
-        print("Thread3_Start.. done") 
+        print("Thread3_Start.. done")
+
+        thread4 = Thread(target=radar1.move_radar, args=())
+        thread4.daemon = True
+        thread4.start()
+        print("Thread4_Start.. done") 
         return "ok"
     except:
         return "fail"

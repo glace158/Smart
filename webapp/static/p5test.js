@@ -15,7 +15,6 @@ function radar_controll(){
 	  }
 	newwrite = true;
       });
-    
   }
 
 var xframe = 500;
@@ -69,7 +68,7 @@ function drawLine() {
   
   translate(xframe/2, yframe);
   stroke(0);
-  line(0,0,((yframe * 0.94) *cos(radians(angle[i]))),-(yframe * 0.94) *sin(radians(angle[i])));  
+  line(0,0,((yframe * 2) *cos(radians(angle[i]))),-(yframe * 2) *sin(radians(angle[i])));  
   stroke(70,70,70);
   line(0,0,((yframe * 0.94) *cos(radians(angle[i]))),-(yframe * 0.94) *sin(radians(angle[i])));
   pop();

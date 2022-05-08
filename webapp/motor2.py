@@ -1,20 +1,23 @@
 import RPi.GPIO as GPIO
 
 class Motor:
-    def __init__(self, EN, INA):#, INB):
+    def __init__(self, EN, INA, INB = None):
         self.ina = INA
-        #self.inb = INB
+        self.inb = INB
+        if (self.inb != None):
+            GPIO.setup(INB, GPIO.OUT)
         
         GPIO.setup(EN, GPIO.OUT)
         GPIO.setup(INA, GPIO.OUT)
-        #GPIO.setup(INB, GPIO.OUT)
+        
         
         self.pwm = GPIO.PWM(EN, 100)
         self.pwm.start(0)
         
         print("----------Motor----------")
         print("PWM: ", self.pwm)
-        print("DIR: ", self.ina)
+        print("INA: ", self.ina)
+        print("INB: ", self.inb)
         
 
     def motor_speed(self, speed):
@@ -22,10 +25,17 @@ class Motor:
     
         if speed == 0:
             GPIO.output(self.ina, 0)
-            #GPIO.output(self.inb, 0)
+            
+            if(self.inb != None):
+                GPIO.output(self.inb, 0)
+
         elif speed < 0:
             GPIO.output(self.ina, 0)
-            #GPIO.output(self.inb, 1)
+
+            if(self.inb != None):
+                GPIO.output(self.inb, 1)
         elif speed > 0:
             GPIO.output(self.ina, 1)
-            #GPIO.output(self.inb, 0)
+            
+            if(self.inb != None):
+                GPIO.output(self.inb, 0)

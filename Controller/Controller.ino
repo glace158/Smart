@@ -5,7 +5,7 @@
 
 const char l_speed_value[] = {'q', 'a', 'z', '0', 'Z', 'A', 'Q'};//moter0
 const char r_speed_value[] = {'w', 's', 'x', '1', 'X', 'S', 'W'};//motor1
-const char wrist_value[] = {'t', ' ', 'T'};// moter3
+const char wrist_value[] = {'t', '2', 'T'};// moter3
 char key_check[] = {' ', ' ', ' ', ' ', ' '};
 
 void setup() {
@@ -27,7 +27,7 @@ void loop() {
   setkeywrite(4, 'I', 'i', state);//wristroll (servo2)
   setkeywrite(5, 'U', 'u', state);//elbow (servo3)
   setkeywrite(6, 'Y', 'y', state);//shoulder (servo4)
-  set_analog_key(4, wrist_value, 341, false);//waist (servo5)
+  set_analog_key(4, wrist_value, 341, true);//waist (servo5)
   delay(10);
 }
 
