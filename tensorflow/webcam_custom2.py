@@ -69,7 +69,7 @@ class VideoStream:
 
 MODEL_NAME = 'Sample_TFLite_model'
 GRAPH_NAME = 'F.tflite'
-LABELMAP_NAME = 'labels.txt'
+LABELMAP_NAME = 'labelmap.txt'
 min_conf_threshold = float(0.6)
 imW, imH =  '1280', '720'
 use_TPU = 'store_true'
@@ -213,8 +213,8 @@ class DetectCamera:
 
 
             # All the results have been drawn on the frame, so it's time to display it.
-            #cv2.imshow('Object detector', frame)
-            self.q.put(b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
+            cv2.imshow('Object detector', frame)
+            #self.q.put(b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
 
     def loading(self):
         return (b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + self.loadimg + b'\r\n')

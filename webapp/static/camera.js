@@ -1,16 +1,8 @@
 var done = false;
 var camstate = 0;
 var armcamstate = false;
-var armcamnum = 0;
-window.onload = function(){
-	done = true;
-	camstate = 1;
-	onloadcam(0);
-	onloadcam(1);
-	setInterval(radar_controll, 1500);
-	fetch("/start");
-	console.log("Load.. done");
-	}
+var armcamnum = 1;
+
 
 function camset(){
 		let result = document.querySelector('#cam_test');

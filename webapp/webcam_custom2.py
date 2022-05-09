@@ -25,7 +25,7 @@ from queue import Queue
 # Source - Adrian Rosebrock, PyImageSearch: https://www.pyimagesearch.com/2015/12/28/increasing-raspberry-pi-fps-with-python-and-opencv/
 class VideoStream:
     """Camera object that controls video streaming from the Picamera"""
-    def __init__(self,cam_num=0, resolution=(640,480),framerate=30):
+    def __init__(self,cam_num, resolution=(640,480),framerate=30):
         # Initialize the PiCamera and the camera image stream
         self.stream = cv2.VideoCapture(cam_num)
         ret = self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
@@ -73,6 +73,7 @@ LABELMAP_NAME = 'labels.txt'
 min_conf_threshold = float(0.6)
 resW, resH = '1280', '720'
 imW, imH = int(resW), int(resH)
+#use_TPU = ''
 use_TPU = 'store_true'
 
 # Import TensorFlow libraries
@@ -141,8 +142,8 @@ input_std = 127.5
 
 class DetectCam:
     #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
-    def __init__(self, cam_num, fps, state=True):
-        self.videostream = VideoStream(cam_num=0, resolution=(imW,imH),framerate=fps).start()
+    def __init__(self, num, fps, state=True):
+        self.videostream = VideoStream(num, resolution=(imW,imH),framerate=fps).start()
         
         frame = cv2.imread("./static/cameraload.png")
         buffer = cv2.imencode('.png', frame)
@@ -151,7 +152,7 @@ class DetectCam:
         self.q = Queue()
         self.state = state
         print("-------DetectCamera-------")
-        print("DetectCamera", cam_num)
+        print("DetectCamera", num)
 
     def gen_frames(self):
         while True:
@@ -214,7 +215,6 @@ class DetectCam:
 
 
             # All the results have been drawn on the frame, so it's time to display it.
-            #cv2.imshow('Object detector', frame)
             self.q.put(b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
 
     def loading(self):
@@ -230,3 +230,5 @@ class DetectCam:
         
     def get_q(self):
         return self.q.get()
+test = DetectCam(4,12)
+test.gen_frames()

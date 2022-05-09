@@ -4,7 +4,7 @@ import motor2
 import servo2
 import radar2
 import camera
-import webcam_custom2
+import webcam_ORG
 import RPi.GPIO as GPIO
 from threading import Thread
 import time
@@ -36,8 +36,10 @@ servos.append(servo2.Servo((25,8), 16, 160))#shoulder 16/160 init 16
 #camera
 cameras = []
 cameras.append(camera.Camera(0, 12))
-cameras.append(camera.Camera(2, 12))
-cameras.append(webcam_custom2.DetectCamera(4, 12))
+cameras.append(webcam_ORG.DetectCam(2, 12))
+cameras.append(camera.Camera(4, 12))
+
+
 print("--------------------------")
 @app.route('/')
 def main():
