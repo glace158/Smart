@@ -11,13 +11,13 @@ window.onload = function(){
 }
 
 $(function(){
-	onloadcam();
+	onloadcam(0);
 	$('.select-area select').on('change', function(){
 		onloadcam($(this).val(), $(this).attr('data-select'));
 	});
 });
 
-function camset(){
+function camset(1){
 	let result = document.querySelector('#cam_test');
 	if(result.innerText == "on"){
 		var time = new Date().getTime();
