@@ -1,15 +1,15 @@
 @charset "utf-8";
 
 * {padding: 0;margin: 0;}
-li {list-style: none;}
+
 .list-wrap {width: 1024px;text-align: left;margin: 0 auto;}
-.list-wrap >ul {display: flex;justify-content: space-between;}
-.list-wrap >ul ~ ul {margin-top: 20px;}
-.list-wrap >ul.bot .cont {height: 263px;box-sizing: border-box;}
-.list-wrap >ul.bot .cont {height: 263px;box-sizing: border-box;}
-.list-wrap >ul >li {display: inline-block;vertical-align: top;font-size: 14px;list-style: none;}
-.list-wrap >ul >li .cont {position: relative;}
-.list-wrap >ul >li.border .cont {border: 3px solid #000;}
+.list-wrap ul {display: flex;justify-content: space-between;}
+.list-wrap ul ~ ul {margin-top: 20px;}
+.list-wrap ul.bot .cont {height: 263px;box-sizing: border-box;}
+.list-wrap ul.bot .cont {height: 263px;box-sizing: border-box;}
+.list-wrap li {display: inline-block;vertical-align: top;font-size: 14px;list-style: none;}
+.list-wrap li .cont {position: relative;}
+.list-wrap li.border .cont {border: 3px solid #000;}
 .list-wrap .tit {height: 40px;font-size: 20px;font-weight: 700;}
 
 .list-wrap .info {width: 200px;}
@@ -30,17 +30,8 @@ li {list-style: none;}
 .list-wrap .arm {width: 279px;}
 .list-wrap .arm .cont {height: 252px;background: url(img_arm.png) no-repeat;background-size: contain;}
 
-.list-wrap .arm .txt-group {position: absolute; left: 160px;top: 10px; }
+.list-wrap .arm .txt-group {position: absolute;left: 160px;top: 10px;}
 .list-wrap .arm .txt-group span {display: block;font-size: 15px;font-weight: 700;letter-spacing: -1px;}
 .list-wrap .arm .txt-group span + span {margin-top: 20px;}
 .list-wrap .arm .txt-group span:nth-child(5) {margin-top: 25px;}
 .list-wrap .arm .fc-green {color: #00b050;}
-
-.list-wrap .option {width: 240px;}
-.list-wrap .option .dl-tit {font-size: 16px;}
-.list-wrap .option li {padding-left: 20px;margin-top: 10px;}
-.list-wrap .option dl {display: flex;text-align: center;flex-wrap: wrap;font-weight: 700;font-size: 14px;padding-left: 20px;margin-top: 3px;}
-.list-wrap .option dt {position: relative;width: 35%;padding: 3px 0;text-align: left}
-.list-wrap .option dt:after {content:":";position: absolute;right: 0;top: 50%;line-height: 1;transform: translateY(-50%);font-size: 24px;font-weight: 700;}
-.list-wrap .option dd {width: 40%;display: flex;align-items: center;justify-content: center;padding: 3px 0;}
-
