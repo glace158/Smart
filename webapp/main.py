@@ -11,7 +11,7 @@ import time
 
 app = Flask(__name__)
 #socketio = SocketIO(app)
-
+time.sleep(5)
 GPIO.setmode(GPIO.BCM)
 startpin = 12
 GPIO.setup(startpin, GPIO.OUT)
@@ -24,7 +24,7 @@ motors.append(motor2.Motor(21, 20, 16))
     
 
 #radar
-radar1 = radar2.Radar(12, 10, 30, 150)
+radar1 = radar2.Radar(16, 10, 30, 150)
 
 #servo 
 servos = []
