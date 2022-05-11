@@ -27,7 +27,21 @@ function onloadcam(num){
 			document.getElementById("cam" + num).src="/video_feed/" + num + "/" + camstate + "?time" + time;
 		}
   }
-  
+/*  
+$(function(){
+	onloadcam(0);
+	$('.select-area select').on('change', function(){
+		onloadcam($(this).val(), $(this).attr('data-select'));
+	});
+});
+
+function onloadcam(num, layout){
+	var time = new Date().getTime();
+	var src;
+	src = "/video_feed/" + num + "/" + camstate + "?time" + time;
+	$('.' + layout).attr('src', src);
+}
+*/
 window.addEventListener("keydown", (e) => {
 	if(servo_keys.includes(e.key.toLowerCase())){
 		armcamstate = true;
