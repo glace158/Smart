@@ -39,3 +39,15 @@ class Servo:
             
             duty = 600 + 10 * ((self.max + self.min) - degree)
             pi.set_servo_pulsewidth(self.pwm[1], duty)
+
+#servos = []
+#servos.append(Servo(14, 0, 60))#grip 0/60 init 0
+#servos.append(Servo(15, 0, 140))#wrist 0/140 -1 init 90
+#servos.append(Servo(18))#wristroll 0/180 init 90
+#servos.append(Servo((23,24), 16,144))#elbow 16/144 init 16
+#servos.append(Servo((25,8),16,160))#shoulder 16/160 init 16
+
+#servos[3].servo_pos(60)
+#time.sleep(3)
+#servos[4].servo_pos(70)
+#time.sleep(3)

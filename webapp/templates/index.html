@@ -13,8 +13,8 @@
             window.onload = function(){
 	            done = true;
 	            camstate = 1;
-	            onloadcam(0);
-	            onloadcam(1);
+	            //onloadcam(0);
+	            //onloadcam(1);
 		    //onloadcam(2);
 	            //setInterval(radar_controll, 1500);
 	            fetch("/start");
@@ -97,26 +97,26 @@
                                     <dd>ON</dd>
                                     <dt>RGB</dt>
                                     <dd class="select-area">
-                                        <select data-select="select01">
+                                        <select id="select00">
                                             <option value="0">cam0</option>
-                                            <option value="1">cam2</option>
-                                            <option value="2">cam4</option>
+                                            <option value="1">cam1</option>
+                                            <option value="2">cam2</option>
                                         </select>
                                     </dd>
                                     <dt>Thermal</dt>
                                     <dd class="select-area">
-                                        <select data-select="select02">
+                                        <select id="select01">
                                             <option value="0">cam0</option>
-                                            <option value="1">cam2</option>
-                                            <option value="2">cam4</option>
+                                            <option value="1" selected>cam1</option>
+                                            <option value="2">cam2</option>
                                         </select>
                                     </dd>
                                     <dt>Arm</dt>
                                     <dd class="select-area">
-                                        <select data-select="select03">
+                                        <select id="select02">
                                             <option value="0">cam0</option>
-                                            <option value="1">cam2</option>
-                                            <option value="2">cam4</option>
+                                            <option value="1">cam1</option>
+                                            <option value="2" selected>cam2</option>
                                         </select>
                                     </dd>
                                 </dl>

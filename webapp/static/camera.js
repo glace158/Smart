@@ -1,7 +1,8 @@
 var done = false;
 var camstate = 0;
 var armcamstate = false;
-var armcamnum = 1;
+var armcamnum = 2;
+var cam = [0,1,2];
 
 
 function camset(){
@@ -18,40 +19,30 @@ function camset(){
 	}
 
 function onloadcam(num){
-	var time = new Date().getTime();
+	let e = document.getElementById("select0" + num);
+	cam[num] = e.selectedIndex;
+	console.log("cam[0]:",cam[0],"cam[1]:",cam[1],"cam[2]:",cam[2]);
 	
+	var time = new Date().getTime();
 	if(done && armcamstate && num == 1){
-			document.getElementById("cam" + num).src="/video_feed/" + armcamnum + "/" + camstate + "?time" + time;
+			let arm = document.getElementById("select02");
+			cam[2] = arm.selectedIndex;
+			document.getElementById("cam" + num).src="/video_feed/" + cam[2] + "/" + camstate + "?time" + time;
 		}
 	else if(done){
-			document.getElementById("cam" + num).src="/video_feed/" + num + "/" + camstate + "?time" + time;
+			document.getElementById("cam" + num).src="/video_feed/" + cam[num]+ "/" + camstate + "?time" + time;
 		}
   }
 
-$(function(){
-	onloadcam(0);
-	$('.select-area select').on('change', function(){
-		onloadcam($(this).val();
-		$('.select-area'). val(src = "/video_feed/" + num + "/" + camstate + "?time" + time);
-	});
-});
-
-$(function(){
-	onloadcam(1);
-	$('.select-area select').on('change', function(){
-		onloadcam($(this).val();
-		$('.select-area'). val(src = "/motor/" + num + "/" + camstate + "?time" + time);
-	});
-});
-
-$(function(){
-	onloadcam(2);
-	$('.select-area select').on('change', function(){
-		onloadcam($(this).val();
-		$('.select-area'). val(src = "/servo/" + num + "/" + camstate + "?time" + time);
-	});
-});
-
+/*
+cameraTrigger.addEventListener("click", funtion(){
+	cameraSeneor.getContext("2d").drawImage(cameraView, 0, 0); 
+	cameraOutput.src = cameraSensor.toDataURL("image/webp");  
+	cameraOutput.classList.add("taken");   
+	console.log(cameraSensor.height);   
+});   
+   
+*/
 
 
 window.addEventListener("keydown", (e) => {

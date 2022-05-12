@@ -26,13 +26,14 @@ motors.append(motor2.Motor(21, 20, 16))
 #radar
 radar1 = radar2.Radar(16, 10, 30, 150)
 
-#servo 
+#servo
 servos = []
-servos.append(servo2.Servo(14))#grip 0/60 init 0
-servos.append(servo2.Servo(15))#wrist 0/140 -1 init 90
-servos.append(servo2.Servo(18))#wristroll 0/180 init 90
-servos.append(servo2.Servo(23,24))#elbow 16/144 init 16
-servos.append(servo2.Servo(25,8))#shoulder 16/160 init 16
+servos.append(servo2.Servo(14, 0, 60))#grip 0/60 init 0
+servos.append(servo2.Servo(15, 0, 140))#wrist 0/140 -1 init 90
+servos.append(servo2.Servo(18, 0, 180))#wristroll 0/180 init 90
+servos.append(servo2.Servo((23,24), 16,144))#elbow 16/144 init 16
+servos.append(servo2.Servo((25,8), 16,160))#shoulder 16/160 init 16
+
 #camera
 cameras = []
 cameras.append(camera.Camera(0, 12))
