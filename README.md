@@ -37,24 +37,38 @@ bash get_pi_requirements.sh
 wget https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
 unzip coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip -d Sample_TFLite_model
 ```
+#### TensorFlow Coral
+```
+// plz unplugged coral
+cd tflite1
+source tflite1-env/bin/activate
+echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
+curl packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install libedgetpu1-max
+// check ok and yes
+wget dl.google.com/coral/canned_models/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite
+mv mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite Sample_TFLite_model/edgetpu.tflite
+// plz plugged coral and start your code 
+```
 #### How to run:
 ```
 python3 TFLite_detection_webcam.py --modeldir=Sample_TFLite_model
 ```
 ## Serial port setting
-####First open the config.txt file
+#### First open the config.txt file
 ```
 sudo nano /boot/config.txt
 ```
-####Add text at endline of the config.txt file
+#### Add text at endline of the config.txt file
 ```
 dtoverlay=uart2
 ```
-####Reboot raspberrypi
+#### Reboot raspberrypi
 ```
 sudo reboot
 ```
-####Check Serial port
+#### Check Serial port
 ```
 ls -l /dev/ttyAMA*
 ```
