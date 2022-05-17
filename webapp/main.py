@@ -49,7 +49,7 @@ def main():
 def mystart():
     try:
         thread1 = Thread(target=cameras[0].gen_frames, args=())
-        thread2 = Thread(target=cameras[1].gen_frames, args=())   
+        thread2 = Thread(target=cameras[1].gen_frames, args=())
         thread1.daemon = True
         thread2.daemon = True
         thread1.start()
@@ -58,10 +58,15 @@ def mystart():
         thread2.start()
         print("Thread2_Start.. done")
         
-        thread3 = Thread(target=radar1.move_radar, args=())
+        thread3 = Thread(target=cameras[2].gen_frames, args=())
         thread3.daemon = True
         thread3.start()
-        print("Thread3_Start.. done") 
+        print("Thread3_Start.. done")
+        
+        #thread4 = Thread(target=radar1.move_radar, args=())
+        #thread4.daemon = True
+        #thread4.start()
+        #print("Thread4_Start.. done") 
         return "ok"
     except:
         return "fail"

@@ -21,28 +21,19 @@ function camset(){
 function onloadcam(num){
 	let e = document.getElementById("select0" + num);
 	cam[num] = e.selectedIndex;
-	console.log("cam[0]:",cam[0],"cam[1]:",cam[1],"cam[2]:",cam[2]);
+	//console.log("cam[0]:",cam[0],"cam[1]:",cam[1],"cam[2]:",cam[2]);
 	
 	var time = new Date().getTime();
 	if(done && armcamstate && num == 1){
 			let arm = document.getElementById("select02");
 			cam[2] = arm.selectedIndex;
-			document.getElementById("cam" + num).src="/video_feed/" + cam[2] + "/" + camstate + "?time" + time;
+			document.getElementById("cam1").src="/video_feed/" + cam[2] + "/" + camstate + "?time" + time;
 		}
 	else if(done){
 			document.getElementById("cam" + num).src="/video_feed/" + cam[num]+ "/" + camstate + "?time" + time;
 		}
   }
 
-/*
-cameraTrigger.addEventListener("click", funtion(){
-	cameraSeneor.getContext("2d").drawImage(cameraView, 0, 0); 
-	cameraOutput.src = cameraSensor.toDataURL("image/webp");  
-	cameraOutput.classList.add("taken");   
-	console.log(cameraSensor.height);   
-});   
-   
-*/
 
 
 window.addEventListener("keydown", (e) => {
