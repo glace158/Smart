@@ -7,6 +7,7 @@ var servo_keys = ['p','o', 'i', 'u', 'y'];
 var armid = ["#Grip", "#Wrist", "#Wrist_Roll", "#Elbow", "#Shoulder", "#Waist"]
 var driveid = ["#L_Speed", "#R_Speed"]
 var key_dic = {};
+var tik = 2;
 
 key_dic = servo_key_setting(servo_keys, key_dic);
 key_dic = moter_key_setting(moter_keys, key_dic, 100 );
@@ -19,7 +20,6 @@ function checkKeydown(e){
 }
 
 function checkKeyup(e){
-
 }
 
 function servo_key_setting(keyarr, dic){
@@ -66,21 +66,24 @@ function set_speed(motor_num, speed){
 }
 
 function set_degree(servo_num, state){
-	let value = 2;
 	
 	degree_arr[servo_num] = state == "true" ? 
-	(degree_arr[servo_num] >= 180 ? 180 : degree_arr[servo_num] + value ):
-	(degree_arr[servo_num] <= 0 ? 0 : degree_arr[servo_num] - value);
+	(degree_arr[servo_num] >= 180 ? 180 : degree_arr[servo_num] + tik ):
+	(degree_arr[servo_num] <= 0 ? 0 : degree_arr[servo_num] - tik);
 	let result = document.querySelector(armid[servo_num]);
 	    key = armid[servo_num].replace("#", ""),
 		val = String(degree_arr[servo_num]);
 		
-	result.innerHTML = key+":  "+val;
+	result.innerHTML = key+":  "+ parseInt(val);
 	set_control("servo", servo_num, degree_arr[servo_num]);
 	  
+}
+
+function set_servospeed(){
+    var x = document.getElementById('a').value;
+    tik = (x-0)*(5-0)/(100-0)+0;
 }
 
 function set_control(type, pwm, speed){
 	fetch("/" + type + "/" + pwm + "/" + speed);
 }
-

@@ -154,7 +154,13 @@ class DetectCam:
         self.state = state
         print("-------DetectCamera-------")
         print("DetectCamera", num)
-
+    
+    def start(self):
+        thread = Thread(target=self.gen_frames, args=())
+        thread.daemon = True
+        thread.start()
+        return self
+    
     def gen_frames(self):
         #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
         while True:
@@ -165,7 +171,7 @@ class DetectCam:
             #input_data change to GRAY
             frame_GRAY = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             frame_rgb = cv2.cvtColor(frame_GRAY, cv2.COLOR_GRAY2RGB)
-            frame_resized = cv2.resize(frame_rgb, (width, height))
+            frame_resized = cv2.resize(frame, (width, height))
             input_data = np.expand_dims(frame_resized, axis=0)
 
             # Normalize pixel values if using a floating model (i.e. if model is non-quantized)
@@ -181,22 +187,11 @@ class DetectCam:
             classes = interpreter.get_tensor(output_details[3]['index'])[0] # Class index of detected objects
             scores = interpreter.get_tensor(output_details[0]['index'])[0] # Confidence of detected objects
             num = interpreter.get_tensor(output_details[2]['index'])[0]  # Total number of detected objects (inaccurate and not needed)
-            
-            #print(output_details[3]['index'])
-            #print(interpreter.get_tensor(output_details[3]['index']))
-            #print(scores)
-            
-            
-            
+         
             # Loop over all detections and draw detection box if confidence izs above minimum threshold
             for i in range(len(scores)):
                 if ((scores[i] > min_conf_threshold) and (scores[i] <= 1.0)):
                     
-                    #print(classes)
-                    #print(scores)
-
-                    # Get bounding box coordinates and draw box
-                    # Interpreter can return coordinates that are outside of image dimensions, need to force them to be within image using max() and min()
                     if labels[int(classes[i])] == 'person':
                         imH_1 = imH /720 * 120
                         imW_1 = imW /1280 * 160

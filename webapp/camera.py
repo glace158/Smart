@@ -1,6 +1,7 @@
 import cv2
 from queue import Queue
 import time
+from threading import Thread
 
 class Camera:
     def __init__(self, cam_num, fps, state=True):
@@ -19,6 +20,16 @@ class Camera:
         self.cam.set(4, 40)
         print("----------Camera----------")
         print("Camera", cam_num, ": ", self.cam.get(3), "X" ,self.cam.get(4))
+    
+    def start(self):
+        ret, frame = self.cam.read()
+        if(ret):
+            thread = Thread(target=self.gen_frames, args=())
+            thread.daemon = True
+            thread.start()
+        else:
+            print("Camera Fail");
+        return self
         
     def gen_frames(self):  
         while True:

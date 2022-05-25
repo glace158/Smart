@@ -5,8 +5,8 @@ var armcamnum = 2;
 var cam = [0,1,2];
 
 
-function camset(){
-		let result = document.querySelector('#cam_test');
+function camera_state(){
+		let result = document.querySelector('#State_test');
 		if(result.innerText == "on"){
 			var time = new Date().getTime();
 				result.innerHTML = "off";
@@ -17,6 +17,24 @@ function camset(){
 				camstate = 1;
 			}
 	}
+
+function radar_state(){
+		let result = document.querySelector('#State_test1');
+		if(result.innerText == "on"){
+			var time = new Date().getTime();
+				result.innerHTML = "off";
+				camstate = 0;
+			}
+		else if(result.innerText == "off"){
+				result.innerHTML = "on";
+				camstate = 1;
+			}
+	}
+
+
+
+
+
 
 function onloadcam(num){
 	let e = document.getElementById("select0" + num);

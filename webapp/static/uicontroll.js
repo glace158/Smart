@@ -7,3 +7,16 @@ window.addEventListener("keydown", function(){
         else if(num < 0) el.className = 'negative';
     })
 });
+
+var gas_value=0;
+
+function get_gas_sensor(){
+    var ad = fetch("/gas")
+    .then(response=> {console.log(response); return response.json()})
+    .then(data=>{
+	 gas_value = JSON.stringify(data);
+     console.log(gas_value);
+      });
+    }
+
+var gasread = setInterval(get_gas_sensor, 30000);

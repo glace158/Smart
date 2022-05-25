@@ -4,11 +4,12 @@ import motor2
 import servo2
 import radar2
 import camera
+import gas_sensor
 import RPi.GPIO as GPIO
 from threading import Thread
 import webcam_ORG
 import time
-
+import cv2
 app = Flask(__name__)
 #socketio = SocketIO(app)
 time.sleep(5)
@@ -36,9 +37,9 @@ servos.append(servo2.Servo((25,8), 16,160))#shoulder 16/160 init 16
 
 #camera
 cameras = []
-cameras.append(camera.Camera(0, 12))
-cameras.append(webcam_ORG.DetectCam(4, 12))
-cameras.append(camera.Camera(2, 12))
+cameras.append(camera.Camera(0, 12).start())
+cameras.append(webcam_ORG.DetectCam(4, 12).start())
+cameras.append(camera.Camera(2, 12).start())
 
 print("--------------------------")
 @app.route('/')
@@ -48,21 +49,6 @@ def main():
 @app.route('/start')
 def mystart():
     try:
-        thread1 = Thread(target=cameras[0].gen_frames, args=())
-        thread2 = Thread(target=cameras[1].gen_frames, args=())
-        thread1.daemon = True
-        thread2.daemon = True
-        thread1.start()
-        print("Thread1_Start.. done")
-        
-        thread2.start()
-        print("Thread2_Start.. done")
-        
-        thread3 = Thread(target=cameras[2].gen_frames, args=())
-        thread3.daemon = True
-        thread3.start()
-        print("Thread3_Start.. done")
-        
         #thread4 = Thread(target=radar1.move_radar, args=())
         #thread4.daemon = True
         #thread4.start()
@@ -113,6 +99,13 @@ def myradar():
         return radar1.get_q()
     except:
         return "fail"
+#gas
+@app.route('/gas')
+def mygas():
+    try:
+        return gas_sensor.readadc(mq2_apin, SPICLK, SPIMOSI, SPIMISO, SPICS)
+    except:
+        return "fail"
 
 if __name__ == '__main__':
     try:
@@ -121,3 +114,4 @@ if __name__ == '__main__':
         GPIO.output(startpin, False)
     except:
         GPIO.cleanup()
+        

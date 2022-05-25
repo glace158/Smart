@@ -12,7 +12,6 @@
         <script>
             window.onload = function(){
 	            done = true;
-	            camstate = 1;
 	            onloadcam(0);
 	            onloadcam(1);
 	            //setInterval(radar_controll, 1500);
@@ -93,7 +92,7 @@
                                 <strong class="dl-tit">Camera Setting</strong>
                                 <dl>
                                     <dt>State</dt>
-                                    <dd>ON</dd>
+                                    <dd onclick="camera_state()" id="State_test">off</dd>
                                     <dt>RGB</dt>
                                     <dd class="select-area">
                                         <select id="select00">
@@ -124,14 +123,14 @@
                                 <strong class="dl-tit">Arm Setting</strong>
                                 <dl>
                                     <dt>speed</dt>
-                                    <dd>100</dd>
+                                    <dd><input type="text"size=2 id="a" value=40 onkeyup='set_servospeed()' ></dd>
                                 </dl>
                             </li>
                             <li>
                                 <strong class="dl-tit">Radar Setting</strong>
                                 <dl>
                                     <dt>State</dt>
-                                    <dd>ON</dd>
+                                    <dd onclick="radar_state()" id="State_test1">off</dd>
                                 </dl>
                             </li>
         </ul>
