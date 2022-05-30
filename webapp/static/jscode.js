@@ -1,9 +1,10 @@
 window.addEventListener("keydown", checkKeydown, false);
 window.addEventListener("keyup", checkKeyup, false);
 
-var degree_arr = [0,90,90,16,16,0];
+var degree_arr = [0,90,90,16,16];
 var moter_keys = [['z', 'a', 'q'], ['x', 's', 'w'],['t','g','b']];
 var servo_keys = ['p','o', 'i', 'u', 'y'];
+var fire_key = "m";
 var armid = ["#Grip", "#Wrist", "#Wrist_Roll", "#Elbow", "#Shoulder", "#Waist"]
 var driveid = ["#L_Speed", "#R_Speed"]
 var key_dic = {};
@@ -20,6 +21,10 @@ function checkKeydown(e){
 }
 
 function checkKeyup(e){
+	if(key == fire_key)
+	{
+		set_extinguisher(0);
+	}
 }
 
 function servo_key_setting(keyarr, dic){
@@ -56,6 +61,14 @@ function set_key(key){
 			set_degree(mrs[0][1], mrs[1]);
 		}
 	}
+	else if(key == fire_key)
+	{
+		set_extinguisher(1);
+	}
+}
+
+function set_extinguisher(state){
+	fetch("/extinguisher/" + state);
 }
 
 function set_speed(motor_num, speed){

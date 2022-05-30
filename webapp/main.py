@@ -46,6 +46,9 @@ servos.append(servo2.Servo(18, 0, 180))#wristroll 0/180 init 90
 servos.append(servo2.Servo((23,24), 16,144))#elbow 16/144 init 16
 servos.append(servo2.Servo((25,8), 16,160))#shoulder 16/160 init 16
 
+#fire
+fire_servo = servo2.Servo(13, 0, 180)
+
 #camera
 cameras = []
 cameras.append(camera.Camera(0, 12).start())
@@ -54,8 +57,8 @@ cameras.append(camera.Camera(2, 12).start())
 
 #dht11
 dht11 = []
-dht11.append(DHT11.DHT11Sensor(13))
-dht11.append(DHT11.DHT11Sensor(20))
+#dht11.append(DHT11.DHT11Sensor(13))
+#dht11.append(DHT11.DHT11Sensor(20))
 
 print("--------------------------")
 @app.route('/')
@@ -124,10 +127,23 @@ def mygas():
         return "fail"
     
 #DHT11
-@app.route('/DHT11/<num>')
-def myDHT11(num):
+#@app.route('/DHT11/<num>')
+#def myDHT11(num):
+#    try:
+#        return str(dht11[num].readtemp())
+#    except:
+#        return "fail"
+
+#extinguisher
+@app.route('/extinguisher/<state>')
+def myDHT11(state):
     try:
-        return str(dht11[num].readtemp())
+        if(int(state) == 0):
+            print("DD")
+            fire_servo.servo_pos(0)
+        else:
+            fire_servo.servo_pos(180)
+        return "ok"
     except:
         return "fail"
 
