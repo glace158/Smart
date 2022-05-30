@@ -47,7 +47,7 @@ class Servo:
 #servos.append(Servo((23,24), 16,144))#elbow 16/144 init 16
 #servos.append(Servo((25,8),16,160))#shoulder 16/160 init 16
 
-#servos[3].servo_pos(60)
+#servos[0].servo_pos(0)
 #time.sleep(3)
-#servos[4].servo_pos(70)
+#servos[1].servo_pos(100)
 #time.sleep(3)

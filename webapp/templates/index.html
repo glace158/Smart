@@ -14,6 +14,9 @@
 	            done = true;
 	            onloadcam(0);
 	            onloadcam(1);
+		    setInterval(get_gas_sensor, 20000);
+		    //setInterval(get_dht_sensor, 20000, 0);
+		    //setInterval(get_dht_sensor, 20000, 1);
 	            //setInterval(radar_controll, 1500);
 	            fetch("/start");
 	            console.log("Load.. done");
@@ -50,11 +53,11 @@
                 <div class="cont">
                     <dl>
                         <dt>outside temperature</dt>
-                        <dd>N/A</dd>
+                        <dd id="dht0">N/A</dd>
                         <dt>inside temperature</dt>
-                        <dd>N/A</dd>
+                        <dd id="dht1">N/A</dd>
                         <dt>air quiality</dt>
-                        <dd>N/A</dd>
+                        <dd><span id="gas">N/A</span></dd>
                         <dt>camera set</dt>
 			<dd onclick="camset()" id="cam_test">on</dd>
                         <dt>mic</dt>

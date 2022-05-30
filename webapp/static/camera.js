@@ -32,10 +32,6 @@ function radar_state(){
 	}
 
 
-
-
-
-
 function onloadcam(num){
 	let e = document.getElementById("select0" + num);
 	cam[num] = e.selectedIndex;
@@ -51,7 +47,6 @@ function onloadcam(num){
 			document.getElementById("cam" + num).src="/video_feed/" + cam[num]+ "/" + camstate + "?time" + time;
 		}
   }
-
 
 
 window.addEventListener("keydown", (e) => {

@@ -8,15 +8,23 @@ window.addEventListener("keydown", function(){
     })
 });
 
-var gas_value=0;
-
 function get_gas_sensor(){
-    var ad = fetch("/gas")
+    let ad = fetch("/gas")
     .then(response=> {console.log(response); return response.json()})
     .then(data=>{
-	 gas_value = JSON.stringify(data);
-     console.log(gas_value);
+	let gas_value = data;
+    let result = document.querySelector("#gas");
+	result.innerHTML = gas_value;
       });
     }
-
-var gasread = setInterval(get_gas_sensor, 30000);
+  
+function get_dht_sensor(num){
+    let ad = fetch("/DHT11/" + num)
+    .then(response=> {console.log(response); return response.json()})
+    .then(data=>{
+	let dht_value = data;
+    let result = document.querySelector("#dht" + num);
+	result.innerHTML = dht_value;
+      });
+    }
+    

@@ -5,6 +5,7 @@ import servo2
 import radar2
 import camera
 import gas_sensor
+import DHT11
 import RPi.GPIO as GPIO
 from threading import Thread
 import webcam_ORG
@@ -17,15 +18,25 @@ GPIO.setmode(GPIO.BCM)
 startpin = 12
 GPIO.setup(startpin, GPIO.OUT)
 
+#gassensor
+SPICLK = 11
+SPIMISO = 9
+SPIMOSI = 10
+SPICS = 19
+mq2_dpin = 26
+mq2_apin = 0
+
+gas = gas_sensor.GasSensor(SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin)
+
 #motor
 motors = []
 motors.append((motor2.Motor(2, 3), motor2.Motor(4,17)))
-motors.append((motor2.Motor(27,22), motor2.Motor(10,9)))
-motors.append(motor2.Motor(21, 20, 16))
+motors.append((motor2.Motor(27,22), motor2.Motor(5,6)))
+#motors.append(motor2.Motor(21, 20, 16))
     
 
 #radar
-radar1 = radar2.Radar(16, 10, 30, 150)
+radar1 = radar2.Radar(7, 10, 30, 150)
 
 #servo
 servos = []
@@ -40,6 +51,11 @@ cameras = []
 cameras.append(camera.Camera(0, 12).start())
 cameras.append(webcam_ORG.DetectCam(4, 12).start())
 cameras.append(camera.Camera(2, 12).start())
+
+#dht11
+dht11 = []
+dht11.append(DHT11.DHT11Sensor(13))
+dht11.append(DHT11.DHT11Sensor(20))
 
 print("--------------------------")
 @app.route('/')
@@ -103,7 +119,15 @@ def myradar():
 @app.route('/gas')
 def mygas():
     try:
-        return gas_sensor.readadc(mq2_apin, SPICLK, SPIMOSI, SPIMISO, SPICS)
+        return str(gas.readadc())
+    except:
+        return "fail"
+    
+#DHT11
+@app.route('/DHT11/<num>')
+def myDHT11(num):
+    try:
+        return str(dht11[num].readtemp())
     except:
         return "fail"
 
