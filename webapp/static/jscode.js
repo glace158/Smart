@@ -32,7 +32,7 @@ function servo_key_setting(keyarr, dic){
 		dic[key.toUpperCase()] = 's' + keyarr.indexOf(key) + " " + "true";
 		dic[key.toLowerCase()] = 's' + keyarr.indexOf(key) + " " + "false";
 		//init
-		set_control("servo", keyarr.indexOf(key), degree_arr[keyarr.indexOf(key)]);
+		set_control("servo", keyarr.indexOf(key), 0);
 	}
 	return dic;
 }

@@ -138,9 +138,9 @@ def myDHT11(num):
 def myextinguisher(state):
     try:
         if(int(state) == 0):
-            fire_servo.servo_pos(0)
-        else:
             fire_servo.servo_pos(180)
+        else:
+            fire_servo.servo_pos(0)
         return "ok"
     except:
         return "fail"
