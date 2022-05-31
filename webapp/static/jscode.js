@@ -1,7 +1,7 @@
 window.addEventListener("keydown", checkKeydown, false);
 window.addEventListener("keyup", checkKeyup, false);
 
-var degree_arr = [0,90,90,16,16];
+//var degree_arr = [0,90,90,16,16];
 var moter_keys = [['z', 'a', 'q'], ['x', 's', 'w'],['t','g','b']];
 var servo_keys = ['p','o', 'i', 'u', 'y'];
 var fire_key = "m";
@@ -73,23 +73,28 @@ function set_extinguisher(state){
 
 function set_speed(motor_num, speed){
 	set_control("motor", motor_num, speed);
+	/*
 	let result = document.querySelector(driveid[motor_num]);
 	val = String(speed);
 	result.innerHTML = val;
+	*/
 }
 
 function set_degree(servo_num, state){
-	
+	let val = state == "true" ? tik : tik * -1;
+	/*
 	degree_arr[servo_num] = state == "true" ? 
 	(degree_arr[servo_num] >= 180 ? 180 : degree_arr[servo_num] + tik ):
 	(degree_arr[servo_num] <= 0 ? 0 : degree_arr[servo_num] - tik);
+
 	let result = document.querySelector(armid[servo_num]);
 	    key = armid[servo_num].replace("#", ""),
 		val = String(degree_arr[servo_num]);
 		
 	result.innerHTML = key+":  "+ parseInt(val);
-	set_control("servo", servo_num, degree_arr[servo_num]);
-	  
+	*/
+	
+	set_control("servo", servo_num, val);
 }
 
 function set_servospeed(){
@@ -98,5 +103,20 @@ function set_servospeed(){
 }
 
 function set_control(type, pwm, speed){
-	fetch("/" + type + "/" + pwm + "/" + speed);
+	fetch("/" + type + "/" + pwm + "/" + speed)
+	.then(response=> {console.log(response); return response.json()})
+    .then(data=>{
+		if(type == "servo"){
+			
+			let result = document.querySelector(armid[pwm]);
+			key = armid[pwm].replace("#", ""),
+
+			result.innerHTML = key+":  "+ parseInt(data);
+		}
+		else if(type == "motor"){
+			let result = document.querySelector(driveid[motor_num]);
+			val = String(speed);
+			result.innerHTML = val;
+		}
+      });
 }

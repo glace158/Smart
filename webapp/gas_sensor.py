@@ -63,6 +63,7 @@ class GasSensor:
         
         adcout >>= 1       # first bit is 'null' so drop it
         return adcout
+
 #obj = GasSensor()
 #print(obj.readadc())
 #GPIO.cleanup()

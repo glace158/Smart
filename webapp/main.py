@@ -40,11 +40,11 @@ radar1 = radar2.Radar(7, 10, 30, 150)
 
 #servo
 servos = []
-servos.append(servo2.Servo(14, 0, 60))#grip 0/60 init 0
-servos.append(servo2.Servo(15, 0, 140))#wrist 0/140 -1 init 90
-servos.append(servo2.Servo(18, 0, 180))#wristroll 0/180 init 90
-servos.append(servo2.Servo((23,24), 16,144))#elbow 16/144 init 16
-servos.append(servo2.Servo((25,8), 16,160))#shoulder 16/160 init 16
+servos.append(servo2.Servo(14, 0, 60, 0))#grip 0/60 init 0
+servos.append(servo2.Servo(15, 0, 140, 90))#wrist 0/140 -1 init 90
+servos.append(servo2.Servo(18, 0, 180, 90))#wristroll 0/180 init 90
+servos.append(servo2.Servo((23,24), 16,144, 16))#elbow 16/144 init 16
+servos.append(servo2.Servo((25,8), 16,160, 16))#shoulder 16/160 init 16
 
 #fire
 fire_servo = servo2.Servo(13, 0, 180)
@@ -102,12 +102,11 @@ def mymoter(num, speed):
         return "fail"  
 
 #servo
-@app.route('/servo/<num>/<degree>')
-def myservo(num, degree):
+@app.route('/servo/<num>/<tik>')
+def myservo(num, tik):
     try:
-        print("Servo", num, ": ",degree)
-        servos[int(num)].servo_pos(int(degree))
-        return "ok"
+        
+        return str(servos[int(num)].servo_pos(int(tik)))
     except:
         return "fail"
 
@@ -127,19 +126,18 @@ def mygas():
         return "fail"
     
 #DHT11
-#@app.route('/DHT11/<num>')
-#def myDHT11(num):
-#    try:
-#        return str(dht11[num].readtemp())
-#    except:
-#        return "fail"
+@app.route('/DHT11/<num>')
+def myDHT11(num):
+    try:
+        return str(dht11[num].readtemp())
+    except:
+        return "fail"
 
 #extinguisher
 @app.route('/extinguisher/<state>')
-def myDHT11(state):
+def myextinguisher(state):
     try:
         if(int(state) == 0):
-            print("DD")
             fire_servo.servo_pos(0)
         else:
             fire_servo.servo_pos(180)

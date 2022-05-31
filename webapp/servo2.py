@@ -10,7 +10,7 @@ class Mode(Enum):
 
 class Servo:
     
-    def __init__(self, pwm, min=0, max=180):
+    def __init__(self, pwm, min=0, max=180, init_pos = 0):
         if ( type(pwm) is int ):
             self.mode = Mode.SINGLE
         elif( type(pwm) == type(()) ):
@@ -19,26 +19,52 @@ class Servo:
         self.min = min
         self.max = max
         
+        self.degree = init_pos
+        self.servo_pos(0)
+
         print("----------Servo----------")
         print("Mode: ", self.mode)
         print("PWM: ", self.pwm)
-        print("Degree: ", self.min, "~", self.max)    
-    
-    def servo_pos(self, degree):
-        if degree > self.max:
-            degree = self.max
-        elif degree < self.min:
-            degree = self.min
+        print("Degree: ", self.min, "~", self.max)
+
+    def servo_pos(self, tik):
+        self.degree += tik
+
+        if self.degree > self.max:
+            self.degree = self.max
+        elif self.degree < self.min:
+            self.degree = self.min
         
-        duty = 600 + 10 * degree
+        duty = 600 + 10 * self.degree
         if( self.mode == Mode.SINGLE):
             pi.set_servo_pulsewidth(self.pwm, duty)
             
         elif( self.mode == Mode.DUAL):
             pi.set_servo_pulsewidth(self.pwm[0], duty)
             
-            duty = 600 + 10 * ((self.max + self.min) - degree)
+            duty = 600 + 10 * ((self.max + self.min) - self.degree)
             pi.set_servo_pulsewidth(self.pwm[1], duty)
+        
+        return self.degree
+
+
+#    def servo_pos(self, degree):
+#        if degree > self.max:
+#            degree = self.max
+#        elif degree < self.min:
+#            degree = self.min
+        
+#        duty = 600 + 10 * degree
+#        if( self.mode == Mode.SINGLE):
+#            pi.set_servo_pulsewidth(self.pwm, duty)
+#            
+#        elif( self.mode == Mode.DUAL):
+#            pi.set_servo_pulsewidth(self.pwm[0], duty)
+            
+#            duty = 600 + 10 * ((self.max + self.min) - degree)
+#            pi.set_servo_pulsewidth(self.pwm[1], duty)
+        
+#        return degree
 
 #servos = []
 #servos.append(Servo(14, 0, 60))#grip 0/60 init 0
