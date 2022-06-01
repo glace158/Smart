@@ -36,7 +36,7 @@ motors.append((motor2.Motor(27,22), motor2.Motor(5,6)))
     
 
 #radar
-radar1 = radar2.Radar(7, 10, 30, 150)
+radar1 = radar2.Radar(7, 10, 30, 150)#.start()
 
 #servo
 servos = []
@@ -57,7 +57,7 @@ cameras.append(camera.Camera(2, 12).start())
 
 #dht11
 dht11 = []
-#dht11.append(DHT11.DHT11Sensor(13))
+dht11.append(DHT11.DHT11Sensor(13))
 #dht11.append(DHT11.DHT11Sensor(20))
 
 print("--------------------------")
@@ -68,10 +68,10 @@ def main():
 @app.route('/start')
 def mystart():
     try:
-        #thread4 = Thread(target=radar1.move_radar, args=())
-        #thread4.daemon = True
-        #thread4.start()
-        #print("Thread4_Start.. done") 
+        thread4 = Thread(target=radar1.move_radar, args=())
+        thread4.daemon = True
+        thread4.start()
+        print("Thread4_Start.. done") 
         return "ok"
     except:
         return "fail"
@@ -129,7 +129,7 @@ def mygas():
 @app.route('/DHT11/<num>')
 def myDHT11(num):
     try:
-        return str(dht11[num].readtemp())
+        return str(dht11[int(num)].readtemp())
     except:
         return "fail"
 

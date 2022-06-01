@@ -14,11 +14,11 @@
 	            done = true;
 	            onloadcam(0);
 	            onloadcam(1);
-		    setInterval(get_gas_sensor, 20000);
-		    //setInterval(get_dht_sensor, 20000, 0);
+		    setInterval(get_gas_sensor, 10000);
+		    setInterval(get_dht_sensor, 10000, 0);
 		    //setInterval(get_dht_sensor, 20000, 1);
 	            //setInterval(radar_controll, 1500);
-	            fetch("/start");
+	            //fetch("/start");
 	            console.log("Load.. done");
 	        }
         </script>

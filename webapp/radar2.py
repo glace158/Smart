@@ -3,7 +3,7 @@ import serial
 import pigpio
 import servo2
 from queue import Queue
-
+from threading import Thread
 
 class Radar:
     
@@ -28,9 +28,10 @@ class Radar:
         print("Pin: ", self.radar_servo)
         print("Degree: ", self.mindegree, "~", self.maxdegree)
         print("Tik: ", self.tik)
-
+    
     def move_radar(self):
         while True:
+            first = self.ser.read(1)
             data = {}
             while (self.degree >= self.mindegree and self.degree <= self.maxdegree):
                 self.degree += self.tik

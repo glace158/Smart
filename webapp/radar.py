@@ -21,7 +21,7 @@ class Radar:
             bytesize=serial.EIGHTBITS,
             timeout=1
             )
-        
+    
     def get_distance(self):
         YCTa = 0
         YCTb = 0
@@ -68,3 +68,5 @@ class Radar:
             self.q.get()
             
         return self.q.get()
+obj = Radar(7, 10, 30, 150)
+obj.move_radar()

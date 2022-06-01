@@ -26,6 +26,5 @@ class DHT11Sensor:
     
 #obj0 = DHT11Sensor(13)
 #obj1 = DHT11Sensor(20)
-
 #print(obj0.readtemp())
 #print(obj1.readtemp())

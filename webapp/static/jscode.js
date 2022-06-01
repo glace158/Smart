@@ -13,7 +13,7 @@ var tik = 2;
 key_dic = servo_key_setting(servo_keys, key_dic);
 key_dic = moter_key_setting(moter_keys, key_dic, 100 );
 console.log(key_dic);
-console.log(degree_arr);
+//console.log(degree_arr);
 
 function checkKeydown(e){
 	set_key(e.key)
