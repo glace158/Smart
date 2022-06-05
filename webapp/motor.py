@@ -28,3 +28,6 @@ def set_motor_contorl(pwm, INA, INB, speed):
   
 
 GPIO.setmode(GPIO.BCM)
+pwm = set_motor(16, 20, 21)
+set_motor_contorl(pwm, 20, 21, 100)
+GPIO.cleanup()

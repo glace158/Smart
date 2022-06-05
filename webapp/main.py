@@ -19,20 +19,20 @@ startpin = 12
 GPIO.setup(startpin, GPIO.OUT)
 
 #gassensor
-SPICLK = 11
-SPIMISO = 9
-SPIMOSI = 10
-SPICS = 19
-mq2_dpin = 26
-mq2_apin = 0
+#SPICLK = 11
+#SPIMISO = 9
+#SPIMOSI = 10
+#SPICS = 19
+#mq2_dpin = 26
+#mq2_apin = 0
 
-gas = gas_sensor.GasSensor(SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin)
+#gas = gas_sensor.GasSensor(SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin)
 
 #motor
 motors = []
 motors.append((motor2.Motor(2, 3), motor2.Motor(4,17)))
 motors.append((motor2.Motor(27,22), motor2.Motor(5,6)))
-#motors.append(motor2.Motor(21, 20, 16))
+motors.append(motor2.Motor(21, 20, 16))
     
 
 #radar
@@ -43,7 +43,7 @@ servos = []
 servos.append(servo2.Servo(14, 0, 60, 0))#grip 0/60 init 0
 servos.append(servo2.Servo(15, 0, 140, 90))#wrist 0/140 -1 init 90
 servos.append(servo2.Servo(18, 0, 180, 90))#wristroll 0/180 init 90
-servos.append(servo2.Servo((23,24), 16,144, 16))#elbow 16/144 init 16
+servos.append(servo2.Servo((23,24), 16,144, 90))#elbow 16/144 init 16
 servos.append(servo2.Servo((25,8), 16,160, 16))#shoulder 16/160 init 16
 
 #fire
@@ -51,13 +51,13 @@ fire_servo = servo2.Servo(13, 0, 180)
 
 #camera
 cameras = []
+cameras.append(webcam_ORG.DetectCam(2, 12).start())
+cameras.append(camera.Camera(4, 12).start())
 cameras.append(camera.Camera(0, 12).start())
-cameras.append(webcam_ORG.DetectCam(4, 12).start())
-cameras.append(camera.Camera(2, 12).start())
 
 #dht11
-dht11 = []
-dht11.append(DHT11.DHT11Sensor(13))
+#dht11 = []
+#dht11.append(DHT11.DHT11Sensor(26))
 #dht11.append(DHT11.DHT11Sensor(20))
 
 print("--------------------------")
@@ -97,7 +97,7 @@ def mymoter(num, speed):
         else:
             motors[int(num)][0].motor_speed(int(speed))
             motors[int(num)][1].motor_speed(int(speed))
-        return "ok"
+        return speed
     except:
         return "fail"  
 

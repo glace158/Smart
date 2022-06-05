@@ -31,7 +31,6 @@ class Radar:
     
     def move_radar(self):
         while True:
-            first = self.ser.read(1)
             data = {}
             while (self.degree >= self.mindegree and self.degree <= self.maxdegree):
                 self.degree += self.tik

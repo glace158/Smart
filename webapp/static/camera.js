@@ -18,19 +18,6 @@ function camera_state(){
 			}
 	}
 
-function radar_state(){
-		let result = document.querySelector('#State_test1');
-		if(result.innerText == "on"){
-			var time = new Date().getTime();
-				result.innerHTML = "off";
-				camstate = 0;
-			}
-		else if(result.innerText == "off"){
-				result.innerHTML = "on";
-				camstate = 1;
-			}
-	}
-
 
 function onloadcam(num){
 	let e = document.getElementById("select0" + num);

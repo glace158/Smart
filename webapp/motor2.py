@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
-
+import time
+GPIO.setmode(GPIO.BCM)
 class Motor:
     def __init__(self, EN, INA, INB = None):
         self.ina = INA
@@ -22,7 +23,7 @@ class Motor:
 
     def motor_speed(self, speed):
         self.pwm.ChangeDutyCycle(abs(speed))  
-    
+        
         if speed == 0:
             GPIO.output(self.ina, 0)
             
@@ -34,8 +35,15 @@ class Motor:
 
             if(self.inb != None):
                 GPIO.output(self.inb, 1)
+                
         elif speed > 0:
             GPIO.output(self.ina, 1)
             
             if(self.inb != None):
                 GPIO.output(self.inb, 0)
+
+#obj = Motor(21, 20, 16)
+#obj.motor_speed(33)
+#time.sleep(2)
+#obj.motor_speed(0)
+GPIO.cleanup()

@@ -3,6 +3,20 @@ var minangle = 30;
 var maxangle = 150;
 let distance = []
 
+
+function radar_state(){
+		let result = document.querySelector('#State_test1');
+		if(result.innerText == "on"){
+			var time = new Date().getTime();
+				result.innerHTML = "off";
+			}
+		else if(result.innerText == "off"){
+				result.innerHTML = "on";
+        setInterval(radar_controll, 1500);
+        fetch("/start");
+			}
+	}
+
 function radar_controll(){
     distance = [];
     var ad = fetch("/radar")

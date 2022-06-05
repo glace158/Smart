@@ -14,10 +14,10 @@
 	            done = true;
 	            onloadcam(0);
 	            onloadcam(1);
-		    setInterval(get_gas_sensor, 10000);
-		    setInterval(get_dht_sensor, 10000, 0);
+		    //setInterval(get_gas_sensor, 10000);
+		    //setInterval(get_dht_sensor, 10000, 0);
 		    //setInterval(get_dht_sensor, 20000, 1);
-	            //setInterval(radar_controll, 1500);
+		    //setInterval(radar_controll, 1500);
 	            //fetch("/start");
 	            console.log("Load.. done");
 	        }
@@ -53,17 +53,11 @@
                 <div class="cont">
                     <dl>
                         <dt>outside temperature</dt>
-                        <dd id="dht0">N/A</dd>
+                        <dd id="dht0">25</dd>
                         <dt>inside temperature</dt>
-                        <dd id="dht1">N/A</dd>
+                        <dd id="dht1">25</dd>
                         <dt>air quiality</dt>
-                        <dd><span id="gas">N/A</span></dd>
-                        <dt>camera set</dt>
-			<dd onclick="camset()" id="cam_test">on</dd>
-                        <dt>mic</dt>
-                        <dd>off</dd>
-                        <dt>sound mute</dt>
-                        <dd>off</dd>
+                        <dd><span id="gas">47</span></dd>
                     </dl>
                 </div>
             </li>
@@ -96,7 +90,7 @@
                                 <dl>
                                     <dt>State</dt>
                                     <dd onclick="camera_state()" id="State_test">off</dd>
-                                    <dt>RGB</dt>
+                                    <dt>Thermal</dt>
                                     <dd class="select-area">
                                         <select id="select00">
                                             <option value="0">cam0</option>
@@ -104,7 +98,7 @@
                                             <option value="2">cam2</option>
                                         </select>
                                     </dd>
-                                    <dt>Thermal</dt>
+                                    <dt>RGB</dt>
                                     <dd class="select-area">
                                         <select id="select01">
                                             <option value="0">cam0</option>
