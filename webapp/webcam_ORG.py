@@ -74,8 +74,8 @@ LABELMAP_NAME = 'labels.txt'
 min_conf_threshold = float(0.6)
 resW, resH = '1280', '720'
 imW, imH = int(resW), int(resH)
-use_TPU = ''
-#use_TPU = 'store_true'
+#use_TPU = ''
+use_TPU = 'store_true'
 
 # Import TensorFlow libraries
 # If tflite_runtime is installed, import interpreter from tflite_runtime, else import from regular tensorflow

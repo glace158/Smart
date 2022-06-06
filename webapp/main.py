@@ -32,7 +32,7 @@ GPIO.setup(startpin, GPIO.OUT)
 motors = []
 motors.append((motor2.Motor(2, 3), motor2.Motor(4,17)))
 motors.append((motor2.Motor(27,22), motor2.Motor(5,6)))
-motors.append(motor2.Motor(21, 20, 16))
+motors.append(motor2.Motor(26,19,20))
     
 
 #radar

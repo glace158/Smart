@@ -6,7 +6,7 @@ class Motor:
         self.ina = INA
         self.inb = INB
         if (self.inb != None):
-            GPIO.setup(INB, GPIO.OUT)
+            GPIO.setup(self.inb, GPIO.OUT)
         
         GPIO.setup(EN, GPIO.OUT)
         GPIO.setup(INA, GPIO.OUT)
@@ -34,6 +34,7 @@ class Motor:
             GPIO.output(self.ina, 0)
 
             if(self.inb != None):
+                print("ff")
                 GPIO.output(self.inb, 1)
                 
         elif speed > 0:
@@ -42,8 +43,11 @@ class Motor:
             if(self.inb != None):
                 GPIO.output(self.inb, 0)
 
-#obj = Motor(21, 20, 16)
+#obj = Motor(26,19,20)
 #obj.motor_speed(33)
-#time.sleep(2)
+#time.sleep(5)
 #obj.motor_speed(0)
-GPIO.cleanup()
+#time.sleep(3)
+#obj.motor_speed(-33)
+#time.sleep(5)
+#GPIO.cleanup()
