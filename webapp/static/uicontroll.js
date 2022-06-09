@@ -19,13 +19,11 @@ function get_gas_sensor(){
     }
   
 function get_dht_sensor(num){
-    fetch("/DHT11/0")
+    fetch("/DHT11/" + num)
     .then(response=> {console.log(response); return response.json()})
     .then(data=>{
 	let dht_value = data;
-    let result = document.querySelector("#dht0");
-	result.innerHTML = dht_value;
-    result = document.querySelector("#dht1");
+    let result = document.querySelector("#dht" + num);
 	result.innerHTML = dht_value;
       });
     }

@@ -12,21 +12,20 @@ import webcam_ORG
 import time
 import cv2
 app = Flask(__name__)
-#socketio = SocketIO(app)
 time.sleep(5)
 GPIO.setmode(GPIO.BCM)
 startpin = 12
 GPIO.setup(startpin, GPIO.OUT)
 
 #gassensor
-#SPICLK = 11
-#SPIMISO = 9
-#SPIMOSI = 10
-#SPICS = 19
-#mq2_dpin = 26
-#mq2_apin = 0
+SPICLK = 11
+SPIMISO = 9
+SPIMOSI = 10
+SPICS = 19
+mq2_dpin = 26
+mq2_apin = 0
 
-#gas = gas_sensor.GasSensor(SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin)
+gas = gas_sensor.GasSensor(SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin)
 
 #motor
 motors = []
@@ -56,9 +55,9 @@ cameras.append(camera.Camera(4, 12).start())
 cameras.append(camera.Camera(0, 12).start())
 
 #dht11
-#dht11 = []
-#dht11.append(DHT11.DHT11Sensor(26))
-#dht11.append(DHT11.DHT11Sensor(20))
+dht11 = []
+dht11.append(DHT11.DHT11Sensor(26))
+dht11.append(DHT11.DHT11Sensor(20))
 
 print("--------------------------")
 @app.route('/')

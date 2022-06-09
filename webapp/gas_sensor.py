@@ -63,31 +63,3 @@ class GasSensor:
         
         adcout >>= 1       # first bit is 'null' so drop it
         return adcout
-
-#obj = GasSensor()
-#print(obj.readadc())
-#GPIO.cleanup()
-#main ioop
-#def main():
-#         init()
-#         print("please wait...")SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin
-#         time.sleep(1)
-#         while True:
-#                  COlevel=readadc(mq2_apin, SPICLK, SPIMOSI, SPIMISO, SPICS)
-#                  
-#                  if GPIO.input(mq2_dpin):
-#                           print("Gas not leak")
-#                           time.sleep(0.5)
-#                  else:
-#                           print("Gas leakage")
-#                           print("Current Gas vaule = " +str(COlevel))
-#                           time.sleep(0.5)
-
-#if __name__ =='__main__':
-#         try:
-#                  main()
-#                  pass
-#         except KeyboardInterrupt:
-#                 pass
-#
-#GPIO.cleanup()

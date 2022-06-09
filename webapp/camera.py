@@ -42,7 +42,6 @@ class Camera:
                 ret, buffer = cv2.imencode('.png', frame)
                 frame = buffer.tobytes()
                 self.q.put(b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
-                #yield (b'--frame\r\n'b'Content-Type: image/png\r\n\r\n' + frame + b'\r\n')
             elif (not self.state and (not self.q.empty())):
                 self.clear_q()
     def loading(self):
@@ -54,7 +53,6 @@ class Camera:
     def clear_q(self):
         while(not self.q.empty()):
             self.q.get()
-        #print("q_empty")   
         
     def get_q(self):
         return self.q.get()
