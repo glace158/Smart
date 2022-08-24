@@ -32,8 +32,6 @@ sudo killall pipiod
 ```
 git clone https://github.com/EdjeElectronics/TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi.git
 mv TensorFlow-Lite-Object-Detection-on-Android-and-Raspberry-Pi/ tflite1
-sudo pip3 install virtualenv
-python3 -m venv tflite1-env
 cd tfilte1
 bash get_pi_requirements.sh
 wget https://storage.googleapis.com/download.tensorflow.org/models/tflite/coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip
@@ -43,7 +41,6 @@ unzip coco_ssd_mobilenet_v1_1.0_quant_2018_06_29.zip -d Sample_TFLite_model
 ```
 // plz unplugged coral
 cd tflite1
-source tflite1-env/bin/activate
 echo "deb https://packages.cloud.google.com/apt coral-edgetpu-stable main" | sudo tee /etc/apt/sources.list.d/coral-edgetpu.list
 curl packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo apt-get update
