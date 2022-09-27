@@ -1,5 +1,8 @@
 from flask import Flask, render_template, session, request, Response
 #from flask_socketio import SocketIO, send, emit
+import wave
+import pyaudio
+import mic
 import motor2
 import servo2
 import radar2
@@ -58,6 +61,9 @@ cameras.append(camera.Camera(0, 12).start())
 dht11 = []
 dht11.append(DHT11.DHT11Sensor(26))
 dht11.append(DHT11.DHT11Sensor(20))
+
+#mic
+mic1 = mic.Mic()
 
 print("--------------------------")
 @app.route('/')
@@ -143,6 +149,12 @@ def myextinguisher(state):
         return "ok"
     except:
         return "fail"
+
+#mic
+@app.route('/audio')
+def audio():
+    return Response(mic1.sound())
+
 
 if __name__ == '__main__':
     try:
