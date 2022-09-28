@@ -93,6 +93,6 @@ sudo apt-get install libgpiod2
 ```
 
 ## Mic
-'''
+```
 sudo apt instlal python3-pyaudio
-'''
+```
