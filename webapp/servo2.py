@@ -36,6 +36,7 @@ class Servo:
             self.degree = self.min
         
         duty = 600 + 10 * self.degree
+        #duty = (self.degree - 0) * (4500 - 500) / (180 - 0) + 500  
         if( self.mode == Mode.SINGLE):
             pi.set_servo_pulsewidth(self.pwm, duty)
             
@@ -46,3 +47,4 @@ class Servo:
             pi.set_servo_pulsewidth(self.pwm[1], duty)
         
         return self.degree
+    

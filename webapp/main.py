@@ -21,14 +21,14 @@ startpin = 12
 GPIO.setup(startpin, GPIO.OUT)
 
 #gassensor
-SPICLK = 11
-SPIMISO = 9
-SPIMOSI = 10
-SPICS = 19
-mq2_dpin = 26
-mq2_apin = 0
+#SPICLK = 11
+#SPIMISO = 9
+#SPIMOSI = 10
+#SPICS = 19
+#mq2_dpin = 26
+#mq2_apin = 0
 
-gas = gas_sensor.GasSensor(SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin)
+#gas = gas_sensor.GasSensor(SPICLK, SPIMISO, SPIMOSI, SPICS, mq2_dpin, mq2_apin)
 
 #motor
 motors = []
@@ -36,20 +36,27 @@ motors.append((motor2.Motor(2, 3), motor2.Motor(4,17)))
 motors.append((motor2.Motor(27,22), motor2.Motor(5,6)))
 motors.append(motor2.Motor(26,19,20))
     
-
 #radar
-radar1 = radar2.Radar(7, 10, 30, 150)#.start()
+radar1 = radar2.Radar(16, 10, 30, 150)#.start()
 
 #servo
 servos = []
-servos.append(servo2.Servo(14, 0, 60, 0))#grip 0/60 init 0
+servos.append(servo2.Servo(14, 16, 76, 16))#grip 16/76 init 0
 servos.append(servo2.Servo(15, 0, 140, 90))#wrist 0/140 -1 init 90
+
+
+
 servos.append(servo2.Servo(18, 0, 180, 90))#wristroll 0/180 init 90
 servos.append(servo2.Servo((23,24), 16,144, 90))#elbow 16/144 init 16
 servos.append(servo2.Servo((25,8), 16,160, 16))#shoulder 16/160 init 16
 
+servos.append(servo2.Servo(7, 0, 180, 90))#wristroll2 0/180 init 90
+
+servos.append(servo2.Servo(9, 0, 180, 90))#cam 0/180 init 90
+servos.append(servo2.Servo(10, 0, 180, 90))#fire 0/180 init 90
+
 #fire
-fire_servo = servo2.Servo(13, 0, 180)
+fire_servo = servo2.Servo(13, 0, 30)
 
 #camera
 cameras = []
@@ -58,9 +65,9 @@ cameras.append(camera.Camera(4, 12).start())
 cameras.append(camera.Camera(0, 12).start())
 
 #dht11
-dht11 = []
-dht11.append(DHT11.DHT11Sensor(26))
-dht11.append(DHT11.DHT11Sensor(20))
+#dht11 = []
+#dht11.append(DHT11.DHT11Sensor(26))
+#dht11.append(DHT11.DHT11Sensor(20))
 
 #mic
 mic1 = mic.Mic()
@@ -123,20 +130,20 @@ def myradar():
     except:
         return "fail"
 #gas
-@app.route('/gas')
-def mygas():
-    try:
-        return str(gas.readadc())
-    except:
-        return "fail"
+#@app.route('/gas')
+#def mygas():
+#    try:
+#        return str(gas.readadc())
+#    except:
+#        return "fail"
     
 #DHT11
-@app.route('/DHT11/<num>')
-def myDHT11(num):
-    try:
-        return str(dht11[int(num)].readtemp())
-    except:
-        return "fail"
+#@app.route('/DHT11/<num>')
+#def myDHT11(num):
+#    try:
+#        return str(dht11[int(num)].readtemp())
+#    except:
+#        return "fail"
 
 #extinguisher
 @app.route('/extinguisher/<state>')
@@ -144,8 +151,8 @@ def myextinguisher(state):
     try:
         if(int(state) == 0):
             fire_servo.servo_pos(180)
-        else:
-            fire_servo.servo_pos(0)
+        elif(int(state) == 1):
+            fire_servo.servo_pos(-180)
         return "ok"
     except:
         return "fail"

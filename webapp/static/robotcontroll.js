@@ -3,7 +3,7 @@ window.addEventListener("keyup", checkKeyup, false);
 
 //var degree_arr = [0,90,90,16,16];
 var moter_keys = [['z', 'a', 'q'], ['x', 's', 'w'],['t','g','b','r','f']];
-var servo_keys = ['p','o', 'i', 'u', 'y'];
+var servo_keys = ['p','o', 'i', 'u', 'y','k', 'j', 'h'];
 var fire_key = ["m", "n"];
 var armid = ["#Grip", "#Wrist", "#Wrist_Roll", "#Elbow", "#Shoulder", "#Waist"]
 var driveid = ["#L_Speed", "#R_Speed"]

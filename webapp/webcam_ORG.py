@@ -91,9 +91,9 @@ else:
         from tensorflow.lite.python.interpreter import load_delegate
 
 # If using Edge TPU, assign filename for Edge TPU model
-if use_TPU:
+#if use_TPU:
     # If user has specified the name of the .tflite file, use that name, otherwise use default 'edgetpu.tflite'
-    GRAPH_NAME = 'F_edgetpu.tflite'
+    #GRAPH_NAME = 'F_edgetpu.tflite'
     #GRAPH_NAME = 'detect.tflite'
 
 # Get path to current working directory
@@ -117,7 +117,9 @@ if labels[0] == '???':
 
 # Load the Tensorflow Lite model.
 # If using Edge TPU, use special load_delegate argument
+
 if use_TPU:
+    GRAPH_NAME = 'F_edgetpu.tflite'
     interpreter = Interpreter(model_path=PATH_TO_CKPT,
                               experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
     print(PATH_TO_CKPT)

@@ -4,7 +4,7 @@
 		<meta charset = "UTF-8">
 		<title>Home</title>
 		<script language="javascript" type="text/javascript" src="./static/p5.min.js"></script>
-		<script language="javascript" type="text/javascript" src="./static/p5test.js?ver=1"></script>
+		<script language="javascript" type="text/javascript" src="./static/radar.js?ver=1"></script>
 		<script type="text/javascript" src="./static/robotcontroll.js?ver=1"></script>
 		<script type="text/javascript" src="./static/uicontroll.js?ver=1"></script>
 		<script type="text/javascript" src="./static/camera.js?ver=4"></script>
@@ -14,9 +14,9 @@
 	            done = true;
 	            onloadcam(0);
 	            onloadcam(1);
-		        setInterval(get_gas_sensor, 10000);
-		        setInterval(get_dht_sensor, 10000, 0);
-		        setInterval(get_dht_sensor, 20000, 1);
+		    setInterval(get_gas_sensor, 10000);
+		    setInterval(get_dht_sensor, 10000, 0);
+		    setInterval(get_dht_sensor, 20000, 1);
 	            console.log("Load.. done");
 	        }
         </script>
@@ -51,11 +51,11 @@
                 <div class="cont">
                     <dl>
                         <dt>outside temperature</dt>
-                        <dd id="dht0">25</dd>
+                        <dd id="dht0">N/A</dd>
                         <dt>inside temperature</dt>
-                        <dd id="dht1">25</dd>
+                        <dd id="dht1">N/A</dd>
                         <dt>air quiality</dt>
-                        <dd><span id="gas">47</span></dd>
+                        <dd><span id="gas">N/A</span></dd>
                     </dl>
                 </div>
             </li>

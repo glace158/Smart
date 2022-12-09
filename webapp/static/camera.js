@@ -37,7 +37,7 @@ function onloadcam(num){
 
 
 window.addEventListener("keydown", (e) => {
-	if(servo_keys.includes(e.key.toLowerCase())){
+	if(servo_keys.includes(e.key.toLowerCase()) && e.key.toLowerCase() != 'j' && e.key.toLowerCase() != 'h'){
 		armcamstate = true;
 	}
 	else{
